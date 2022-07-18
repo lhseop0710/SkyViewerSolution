@@ -91,6 +91,7 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
+        return self.count_load_image
     def BackwardImageFromFile(self) :
         self.count_load_image -= 1
         #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
@@ -98,18 +99,21 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
+        return self.count_load_image
     def LeftImageFromFile(self) :
         #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
         self.qPixmapFileVar = QPixmap()
         self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
+        return self.count_load_image
     def RightImageFromFile(self) :
         #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
         self.qPixmapFileVar = QPixmap()
         self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
+        return self.count_load_image
 
     # class Panoramic(QtWidgets.QWidget):
     #     def __init__(self, imagePath):
