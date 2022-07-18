@@ -79,7 +79,7 @@ class WindowClass(QMainWindow, form_class) :
             self.file_name_label.setText(item.text())
 
     def loadImageFromFile(self) :
-        self.hide()
+        # self.hide()             #메인윈도우 숨김
         self.second = panoramic360(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)  # 두번째창 생성
         self.second.exec()  # 두번째창 닫을때까지 기다림
         self.show()
