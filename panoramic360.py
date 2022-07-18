@@ -5,13 +5,11 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 
-# class Panoramic(QtWidgets.QWidget):
-#     def __init__(self, imagePath):
-#         QtWidgets.QWidget.__init__(self)
 form_Panoramic = uic.loadUiType("panoramic360.ui")[0] #두 번째 창 ui
-class panoramic360(QMainWindow, form_Panoramic):
+class panoramic360(QDialog, QWidget, form_Panoramic):
     def __init__(self, imagePath):
         super().__init__()
+        self.setupUi(self)
         self.setCursor(QtCore.Qt.CrossCursor)
         self.setFixedSize(1280, 720)  # 창크기 고정
         # keep a reference of the original image
@@ -33,6 +31,13 @@ class panoramic360(QMainWindow, form_Panoramic):
         qp.drawPixmap(self.source.width(), 0, self.source)
         qp.drawPixmap(self.source.width() * 2, 0, self.source)
         qp.end()
+        self.show()
+
+        self.btn_return_home.clicked.connect(self.return_home)
+
+    def return_home(self):
+        self.close()                    #메인윈도우 숨김
+
 
     def moveCenter(self):
         if not self.delta:
@@ -76,9 +81,9 @@ class panoramic360(QMainWindow, form_Panoramic):
     def resizeEvent(self, event):
         self.sourceRect.setSize(self.size())
         self.sourceRect.moveCenter(self.center)
-
-if __name__ == '__main__':
-    app = QtWidgets.QApplication(sys.argv)
-    w = panoramic360('/Users/leehoseop/Desktop/Photo_1080295507_DJI_83_pano_14026756_0_2022623175722_photo_original.JPG')
-    w.show()
-    sys.exit(app.exec_())
+#
+# if __name__ == '__main__':
+#     app = QtWidgets.QApplication(sys.argv)
+#     w = panoramic360('/Users/leehoseop/Desktop/Photo_1080295507_DJI_83_pano_14026756_0_2022623175722_photo_original.JPG')
+#     w.show()
+#     sys.exit(app.exec_())

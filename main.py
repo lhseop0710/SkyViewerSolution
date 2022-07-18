@@ -79,14 +79,10 @@ class WindowClass(QMainWindow, form_class) :
             self.file_name_label.setText(item.text())
 
     def loadImageFromFile(self) :
-        #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
-        # self.qPixmapFileVar = QPixmap()
-        # self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
-        # self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
-        # self.image_Label.setPixmap(self.qPixmapFileVar)
         self.hide()
-        self.panoramic360 = panoramic360(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)  # 두번째창 생성
-        self.panoramic360.exec()  # 두번째창 닫을때까지 기다림
+        self.second = panoramic360(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)  # 두번째창 생성
+        self.second.exec()  # 두번째창 닫을때까지 기다림
+        self.show()
 
     def ForwardImageFromFile(self) :
         self.count_load_image += 1
