@@ -10,8 +10,10 @@ import json
 import cv2
 import beep
 import shutil
-import
+from collections import OrderedDict
+# import
 
+# panoramic360.panoramic360.return_home()
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
 
 class WindowClass(QMainWindow, form_class) :
@@ -38,6 +40,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_Backward.clicked.connect(self.BackwardImageFromFile)
         self.btn_Left.clicked.connect(self.LeftImageFromFile)
         self.btn_Right.clicked.connect(self.RightImageFromFile)
+        self.btn_test.clicked.connect(self.test)
         # self.btn_Image_Data_Generator.clicked.connect(self.Data_Generator)  #OpenCV창으로 넘어가도록 함
 
     def File_Dialog(self):
@@ -99,6 +102,10 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
         return self.count_load_image
+
+    def test(self):
+        print("hello")
+
 
     def Image_Labling(self):            #파일의 경로를 받아올 수 있도록 함
         global img  #전역변수 참조
