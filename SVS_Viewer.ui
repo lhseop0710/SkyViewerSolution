@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1783</width>
-    <height>1007</height>
+    <width>1600</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>18</y>
-      <width>1341</width>
-      <height>920</height>
+      <x>10</x>
+      <y>10</y>
+      <width>1261</width>
+      <height>671</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -39,10 +39,10 @@
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>1370</x>
-      <y>0</y>
+      <x>1280</x>
+      <y>10</y>
       <width>21</width>
-      <height>1020</height>
+      <height>831</height>
      </rect>
     </property>
     <property name="orientation">
@@ -52,9 +52,9 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>1400</x>
-      <y>114</y>
-      <width>360</width>
+      <x>1310</x>
+      <y>100</y>
+      <width>271</width>
       <height>291</height>
      </rect>
     </property>
@@ -67,8 +67,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>1412</x>
-      <y>425</y>
+      <x>1315</x>
+      <y>406</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -80,8 +80,8 @@
    <widget class="QLabel" name="file_name_label">
     <property name="geometry">
      <rect>
-      <x>1452</x>
-      <y>423</y>
+      <x>1355</x>
+      <y>404</y>
       <width>311</width>
       <height>20</height>
      </rect>
@@ -93,10 +93,10 @@
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>1410</x>
-      <y>740</y>
-      <width>343</width>
-      <height>211</height>
+      <x>1320</x>
+      <y>710</y>
+      <width>251</width>
+      <height>141</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -137,25 +137,12 @@
      </item>
     </layout>
    </widget>
-   <widget class="Line" name="line_2">
-    <property name="geometry">
-     <rect>
-      <x>1390</x>
-      <y>650</y>
-      <width>381</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>1399</x>
-      <y>30</y>
-      <width>361</width>
+      <x>1310</x>
+      <y>10</y>
+      <width>271</width>
       <height>80</height>
      </rect>
     </property>
@@ -176,13 +163,26 @@
      </item>
     </layout>
    </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>680</y>
+      <width>1581</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1783</width>
+     <width>1600</width>
      <height>24</height>
     </rect>
    </property>

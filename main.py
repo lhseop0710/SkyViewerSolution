@@ -7,6 +7,10 @@ from PyQt5.QtGui import *
 from PyQt5 import uic, QtCore, QtGui, QtWidgets
 from panoramic360 import panoramic360
 import json
+import cv2
+import beep
+import shutil
+import
 
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
 
@@ -24,28 +28,7 @@ class WindowClass(QMainWindow, form_class) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
-        self.setFixedSize(1920,1080)                        #창크기 고정
-
-        # self.setCursor(QtCore.Qt.CrossCursor)
-        # # keep a reference of the original image
-        # self.source = QPixmap(self.directory_path + self.file_name + str(self.count_load_image).zfill(4) + self.ext)
-        # self.pano = QPixmap(self.source.width() * 3, self.source.height())
-        # self.center = self.pano.rect().center()
-        # # use a QPointF for precision
-        # self.delta = QtCore.QPointF()
-        # self.deltaTimer = QtCore.QTimer(interval=25, timeout=self.moveCenter)
-        # self.sourceRect = QtCore.QRect()
-        # # create a pixmap with three copies of the source;
-        # # this could be avoided by smart repainting and translation of the source
-        # # but since paintEvent automatically clips the painting, it should be
-        # # faster then computing the new rectangle each paint cycle, at the cost
-        # # of a few megabytes of memory.
-        # self.setMaximumSize(self.source.size())
-        # qp = QtGui.QPainter(self.pano)
-        # qp.drawPixmap(0, 0, self.source)
-        # qp.drawPixmap(self.source.width(), 0, self.source)
-        # qp.drawPixmap(self.source.width() * 2, 0, self.source)
-        # qp.end()
+        self.setFixedSize(1600,900)                        #창크기 고정
 
         self.btn_loadFromFile.clicked.connect(self.File_Dialog)
         self.btn_Delete_List.clicked.connect(self.Clear_File_List)
@@ -55,8 +38,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_Backward.clicked.connect(self.BackwardImageFromFile)
         self.btn_Left.clicked.connect(self.LeftImageFromFile)
         self.btn_Right.clicked.connect(self.RightImageFromFile)
-
-
+        # self.btn_Image_Data_Generator.clicked.connect(self.Data_Generator)  #OpenCV창으로 넘어가도록 함
 
     def File_Dialog(self):
         path = QFileDialog.getExistingDirectory(self, 'Open File')
@@ -92,6 +74,7 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
         return self.count_load_image
+
     def BackwardImageFromFile(self) :
         self.count_load_image -= 1
         #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
@@ -100,6 +83,7 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
         return self.count_load_image
+
     def LeftImageFromFile(self) :
         #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
         self.qPixmapFileVar = QPixmap()
@@ -107,6 +91,7 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
         self.image_Label.setPixmap(self.qPixmapFileVar)
         return self.count_load_image
+
     def RightImageFromFile(self) :
         #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
         self.qPixmapFileVar = QPixmap()
@@ -115,29 +100,125 @@ class WindowClass(QMainWindow, form_class) :
         self.image_Label.setPixmap(self.qPixmapFileVar)
         return self.count_load_image
 
-    # class Panoramic(QtWidgets.QWidget):
-    #     def __init__(self, imagePath):
-    #         QtWidgets.QWidget.__init__(self)
-    #         self.setCursor(QtCore.Qt.CrossCursor)
-    #         # keep a reference of the original image
-    #         self.source = QtGui.QPixmap(imagePath)
-    #         self.pano = QtGui.QPixmap(self.source.width() * 3, self.source.height())
-    #         self.center = self.pano.rect().center()
-    #         # use a QPointF for precision
-    #         self.delta = QtCore.QPointF()
-    #         self.deltaTimer = QtCore.QTimer(interval=25, timeout=self.moveCenter)
-    #         self.sourceRect = QtCore.QRect()
-    #         # create a pixmap with three copies of the source;
-    #         # this could be avoided by smart repainting and translation of the source
-    #         # but since paintEvent automatically clips the painting, it should be
-    #         # faster then computing the new rectangle each paint cycle, at the cost
-    #         # of a few megabytes of memory.
-    #         self.setMaximumSize(self.source.size())
-    #         qp = QtGui.QPainter(self.pano)
-    #         qp.drawPixmap(0, 0, self.source)
-    #         qp.drawPixmap(self.source.width(), 0, self.source)
-    #         qp.drawPixmap(self.source.width() * 2, 0, self.source)
-    #         qp.end()
+    def Image_Labling(self):            #파일의 경로를 받아올 수 있도록 함
+        global img  #전역변수 참조
+        global x_point, y_point, w_point, h_point #전역변수 참조
+        global img_draw
+        Labeled_data_path = '/Users/leehoseop/Data_Creator_Project_for_drone_cop/#4.Labeled_Data/Full_Data/' #라벨링한 이미지의 경로를 지정
+        path_dir = QFileDialog.getExistingDirectory(self, 'Open File')
+        file_list = os.listdir(path_dir)
+        file_list.sort()
+        # 맥OS에서는 list를 자동적으로 정렬해주지 않으므로 list.sort()
+        # 기본적으로 리스트를 오름차순으로 정렬 해줌
+        #fname = QFileDialog.getOpenFileName(self)
+        #path = QFileDialog.getExistingDirectory(self, 'Open File') + '/'   #경로는 리스트로 출력됨 사용할때는 반드시 뒤에 []에 해당 인덱스를 붙여줘야함
+        isDragging = False  # 마우스 드래그 상태 저장
+        x0, y0, w, h = -1, -1, -1, -1  # 영역 선택 좌표 저장
+        blue, red = (255, 0, 0), (0, 0, 255)  # 색상 값
+
+        if not file_list:
+            print("img_load_fail")
+            sys.exit()
+
+        i = 2
+        while i < len(file_list):
+            img_name = path_dir + '/' + file_list[i]
+            print(file_list[i])
+            print(img_name)
+            img = cv2.imread(img_name, cv2.IMREAD_COLOR)
+            cv2.imshow('img_data', img)
+            key = cv2.waitKey(0)
+            if i > len(file_list):
+                msg = QMessageBox()
+                msg.setWindowTitle('Message')
+                msg.setText("No more Images, Press OK")
+                break
+
+            if key == 110:  # 'n'을 누르면 다음사진
+                print('Next_img:   ', key)
+
+                i += 1
+                # img_name = path_dir + '/' + file_list[i]
+                # img = cv2.imread(img_name, cv2.IMREAD_COLOR)
+                cv2.imshow("Drone_cop_db_Auto_chase_"+str(i-1).zfill(5)+".jpg", img)
+                cv2.destroyWindow("Drone_cop_db_Auto_chase_" + str(i - 2).zfill(5) + ".jpg")
+
+            elif key == 98:  # 'b'를 누르면 이전사진
+                print('Previous_img:   ', key)
+                i -= 1
+                # img_name = path_dir + '/' + file_list[i]
+                # img = cv2.imread(img_name, cv2.IMREAD_COLOR)
+                cv2.imshow("Drone_cop_db_Auto_chase_"+str(i-1).zfill(5)+".jpg", img)
+                cv2.destroyWindow("Drone_cop_db_Auto_chase_" + str(i - 2).zfill(5) + ".jpg")
+
+            elif key ==  32:  # 'spacebar'를 누르면 라벨링
+                print('Mouse_Event')
+                cv2.imshow('img_draw', img)
+                cv2.setMouseCallback('img_draw', self.onMouse)  # 마우스 이벤트 등록 ---⑧
+
+                self.hide()         #메인윈도우 숨김
+                self.second = secondwindow()    #두번째창 생성
+                self.second.exec()          #두번째창 닫을때까지 기다림
+                # self.show()  # 두번쨰창 닫으면 다시 메인윈도우
+
+                query = self.second.second_text
+                selected_object = query
+                object_number = None
+                production = None
+                if selected_object == "drone":
+                    object_number = "1"
+                    production = None
+                elif selected_object == "Plane":
+                    object_number = "2"
+                    production = None
+                elif selected_object == "helicoptor":
+                    object_number = "3"
+                    production = None
+                elif selected_object == "dji_phantom":
+                    object_number = "4"
+                    production = "dji"
+                elif selected_object == "dji_mavic":
+                    object_number = "5"
+                    production = "dji"
+                elif selected_object == "dji_inspire":
+                    object_number = "6"
+                    production = "dji"
+                elif selected_object == "parrot_bibop":
+                    object_number = "7"
+                    production = "parrot"
+                elif selected_object == "rc_plane":
+                    object_number = "8"
+                    production = None
+                elif selected_object == "rc_helicoptor":
+                    object_number = "9"
+                    production = None
+
+                #json파일에 정보를 넣어준다.
+                file_data = OrderedDict()
+                file_data["version"] = "1.0.0"
+                file_data["filename"] = "%s" %selected_object
+                file_data["shapes"] = {'label': '%s' % str(query),
+                                       'production_company': "%s" %production,
+                                       'points': [[x_point, y_point],
+                                                  [w_point, h_point]],
+                                       }
+                file_data["number"] = "%s" %object_number
+
+                print(json.dumps(file_data, ensure_ascii=False, indent="\t"))
+            #
+            # elif key == 109: # 'm'을 누르면 json파일 저장 및 이미지 복사r
+                with open(Labeled_data_path+file_list[i]+'.json', 'w', encoding="utf-8") as make_file:
+                    json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
+                shutil.copy(img_name, Labeled_data_path)
+                beep.beep(sound=1)
+                cv2.waitKey()
+                cv2.destroyWindow('img_draw')
+
+            elif key == 27:  # 'ESC'를 누르면 종료
+                print('Exit_image_viewer')
+                cv2.destroyAllWindows()
+                self.show()             #두번째창 닫으면 다시 첫 번째 창 보여 짐
+                break
 
     # def loadImageFromWeb(self) :
     #

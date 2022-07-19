@@ -11,7 +11,8 @@ class panoramic360(QDialog, QWidget, form_Panoramic):
         super().__init__()
         self.setupUi(self)
         self.setCursor(QtCore.Qt.CrossCursor)
-        self.setFixedSize(1280, 720)  # 창크기 고정
+        self.setFixedSize(1200, 670)  # 창크기 고정
+        self.setWindowTitle("SVS 360 Panoramic Viewer")
         # keep a reference of the original image
         self.source = QtGui.QPixmap(imagePath)
         self.pano = QtGui.QPixmap(self.source.width() * 3, self.source.height())
