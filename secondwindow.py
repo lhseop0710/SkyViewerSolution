@@ -22,7 +22,7 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
         self.home_btn.clicked.connect(self.home)
 
     def initUI(self):
-        self.setWindowTitle("VUASRL_IMAGE_DATA_CREATOR" + " / Version 1.0.0")
+        self.setWindowTitle("SVS_DATA_CREATOR" + " / Version Beta")
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
 
 
@@ -50,15 +50,18 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
 
     def save_labeling_information(self):
         self.second_text = self.item_label.text()
-        self.close()
 
-    # def close(self):
-    #     self.close()
+    def close(self):
+        self.close()  # 메인윈도우 숨김
+        # self.seconde = secondwindow()  # 두번째창 생성
+        # self.seconde.exec()  # 두번째창 닫을때까지 기다림
+        # self.hide()
+        cv2.destroyAllWindows()
 
     def home(self):
         self.close()  # 메인윈도우 숨김
-        self.main = SVS_Viewer()  # 두번째창 생성
-        self.second.exec()  # 두번째창 닫을때까지 기다림
-        self.hide()
+    #     self.main = form_class()  # 두번째창 생성
+    #     self.main.exec()  # 두번째창 닫을때까지 기다림
+    #     self.hide()
         cv2.destroyAllWindows()
 

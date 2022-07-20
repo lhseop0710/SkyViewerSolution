@@ -14,32 +14,10 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>1261</width>
-      <height>671</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item row="0" column="1">
-      <widget class="QLabel" name="image_Label">
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>1280</x>
+      <x>1222</x>
       <y>10</y>
       <width>21</width>
       <height>831</height>
@@ -52,9 +30,9 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>1310</x>
-      <y>100</y>
-      <width>271</width>
+      <x>1250</x>
+      <y>146</y>
+      <width>331</width>
       <height>291</height>
      </rect>
     </property>
@@ -67,8 +45,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>1315</x>
-      <y>406</y>
+      <x>1256</x>
+      <y>452</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -80,70 +58,26 @@
    <widget class="QLabel" name="file_name_label">
     <property name="geometry">
      <rect>
-      <x>1355</x>
-      <y>404</y>
-      <width>311</width>
-      <height>20</height>
+      <x>1296</x>
+      <y>450</y>
+      <width>281</width>
+      <height>18</height>
      </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
     </property>
     <property name="text">
      <string> Undifined</string>
     </property>
    </widget>
-   <widget class="QWidget" name="gridLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>1320</x>
-      <y>710</y>
-      <width>251</width>
-      <height>141</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
-      <widget class="QPushButton" name="btn_Forward">
-       <property name="text">
-        <string>Forward</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QPushButton" name="btn_Backward">
-       <property name="text">
-        <string>Backward</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="btn_SVS">
-       <property name="text">
-        <string>SVS</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="btn_Left">
-       <property name="text">
-        <string>Left</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QPushButton" name="btn_Right">
-       <property name="text">
-        <string>Right</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>1310</x>
+      <x>1250</x>
       <y>10</y>
-      <width>271</width>
-      <height>80</height>
+      <width>331</width>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -161,19 +95,106 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="btn_Image_Data_Generator">
+       <property name="text">
+        <string>Image Data Generator</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
-   <widget class="Line" name="line_3">
+   <widget class="QLabel" name="image_Label">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>680</y>
-      <width>1581</width>
-      <height>20</height>
+      <x>15</x>
+      <y>12</y>
+      <width>1200</width>
+      <height>675</height>
      </rect>
     </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">file:///Users/leehoseop/Desktop/SVS_background.png</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Plain</enum>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="midLineWidth">
+     <number>10</number>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>395</x>
+      <y>799</y>
+      <width>481</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="btn_Previous">
+       <property name="text">
+        <string>Previous</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QPushButton" name="btn_SVS">
+       <property name="text">
+        <string>SVS</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="btn_Next">
+       <property name="text">
+        <string>Next</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="file_path_label">
+    <property name="geometry">
+     <rect>
+      <x>1296</x>
+      <y>476</y>
+      <width>281</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string> Undifined</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>1256</x>
+      <y>478</y>
+      <width>31</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Path:</string>
     </property>
    </widget>
   </widget>

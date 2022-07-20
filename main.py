@@ -1,11 +1,13 @@
+#!/usr/bin/env python3
 import sys
 import os
 import urllib.request
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
-from PyQt5 import uic, QtCore, QtGui, QtWidgets
+from PyQt5 import uic
 from panoramic360 import panoramic360
+from secondwindow import secondwindow
 import json
 import cv2
 import beep
@@ -17,51 +19,67 @@ from collections import OrderedDict
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
 
 class WindowClass(QMainWindow, form_class) :
-    count_load_image = 131
+    count_load_image = 0
     count_save_image = 0
     directory_path = "/Users/leehoseop/Desktop/img_data/360_image/"
     file_name = "DJI_"
     ext = ".JPG"
+    images_path = []
+    background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/SVS_background2.png"
 
     def initUI(self):
-        self.setWindowTitle("Sky Viewer Solution Data Creator" + " Vesion Beta")
         self.show()
+
 
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
         self.setFixedSize(1600,900)                        #창크기 고정
+        self.setWindowTitle("Sky Viewer Solution Data Creator" + " Vesion Beta")
+        self.setWindowIcon(QIcon("/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/icon.png"))
+        self.image_Label.setStyleSheet("background-image : url(%s)" %self.background_picture)
+        self.image_Label.setAutoFillBackground(True)
+
 
         self.btn_loadFromFile.clicked.connect(self.File_Dialog)
         self.btn_Delete_List.clicked.connect(self.Clear_File_List)
         self.listWidget.itemSelectionChanged.connect(self.File_list_itemSelectionChange)
         self.btn_SVS.clicked.connect(self.loadImageFromFile)
-        self.btn_Forward.clicked.connect(self.ForwardImageFromFile)
-        self.btn_Backward.clicked.connect(self.BackwardImageFromFile)
-        self.btn_Left.clicked.connect(self.LeftImageFromFile)
-        self.btn_Right.clicked.connect(self.RightImageFromFile)
-        self.btn_test.clicked.connect(self.test)
-        # self.btn_Image_Data_Generator.clicked.connect(self.Data_Generator)  #OpenCV창으로 넘어가도록 함
+        self.btn_Next.clicked.connect(self.NextImageFromFile)
+        self.btn_Previous.clicked.connect(self.PreviousImageFromFile)
+        self.btn_Image_Data_Generator.clicked.connect(self.Image_Labling)  #OpenCV창으로 넘어가도록 함
+        self.listWidget.itemClicked.connect(self.Clicked_list_item)
 
     def File_Dialog(self):
-        path = QFileDialog.getExistingDirectory(self, 'Open File')
-        file_list = os.listdir(path)
-        file_list_py = [file for file in file_list if file.endswith('.jpg')]  ## 파일명 끝이 .jpg인 경우
+        exts = ('.jpg', 'png', '.JPG', '.PNG')
+
+        images_path = QFileDialog.getExistingDirectory(self, 'Open File')
+        self.images_path.append(images_path)
+        file_list = os.listdir(images_path)
+        print(images_path)
+        file_list_py = [file for file in file_list if file.endswith(exts)]  ## 파일명 끝이 .jpg인 경우
 
         for file in sorted(file_list_py):
             self.listWidget.addItem(file)
 
     def Clear_File_List(self):
-        self.listWidget.clear()
+        self.listWidget.clear()         #파일리스트 삭제
         self.File_list_itemSelectionChange()
+        self.file_path_label.setText("Undifined")
+        self.images_path.clear()        #imagesPath 초기화
+        self.qPixmapFileVar = QPixmap()
+        self.qPixmapFileVar.load(str(self.background_picture))
+        self.image_Label.setPixmap(self.qPixmapFileVar)
 
 
     def File_list_itemSelectionChange(self):
         item = self.listWidget.currentItem()
+        path = self.images_path
         if (item == None):
             self.file_name_label.setText("Undifined")
         else:
             self.file_name_label.setText(item.text())
+            self.file_path_label.setText(str(path[0]) + "/" + item.text())
 
     def loadImageFromFile(self) :
         # self.hide()             #메인윈도우 숨김
@@ -69,49 +87,115 @@ class WindowClass(QMainWindow, form_class) :
         self.second.exec()  # 두번째창 닫을때까지 기다림
         self.show()
 
-    def ForwardImageFromFile(self) :
-        self.count_load_image += 1
-        #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
+    #클릭한 아이템을 라벨에 보여주도록 함
+    def Clicked_list_item(self, item):
         self.qPixmapFileVar = QPixmap()
-        self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
-        self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
+        self.qPixmapFileVar.load(str(self.images_path[0]) + "/" + str(item.text()))
+        self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
         self.image_Label.setPixmap(self.qPixmapFileVar)
-        return self.count_load_image
 
-    def BackwardImageFromFile(self) :
-        self.count_load_image -= 1
-        #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
-        self.qPixmapFileVar = QPixmap()
-        self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
-        self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
-        self.image_Label.setPixmap(self.qPixmapFileVar)
-        return self.count_load_image
+    def NextImageFromFile(self) :
+        item = self.listWidget.currentItem() #파일 이름
+        value = self.listWidget.count() #리스트내 파일_전체 계수
+        row = self.listWidget.currentRow() #현재 행
+        self.row += row
+        print(value)
+        print(row)
+        if self.row < value:
+            self.listWidget.setCurrentRow(row+1)
+            self.qPixmapFileVar = QPixmap()
+            self.qPixmapFileVar.load(str(self.images_path[0]) + "/" + str(item.text()))
+            self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
+            self.image_Label.setPixmap(self.qPixmapFileVar)
+        else :
+            self.listWidget.setCurrentRow(0)
 
-    def LeftImageFromFile(self) :
-        #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
-        self.qPixmapFileVar = QPixmap()
-        self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
-        self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
-        self.image_Label.setPixmap(self.qPixmapFileVar)
-        return self.count_load_image
+    def PreviousImageFromFile(self) :
+        item = self.listWidget.currentItem()
+        value = self.listWidget.count()
+        row = self.listWidget.currentRow() #현재 행
+        self.row -= row
+        print(value)
+        print(row)
+        if row < value:
+            self.listWidget.setCurrentRow(row-1)
+            self.qPixmapFileVar = QPixmap()
+            self.qPixmapFileVar.load(str(self.images_path[0]) + "/" + str(item.text()))
+            self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
+            self.image_Label.setPixmap(self.qPixmapFileVar)
+        else :
+            self.listWidget.setCurrentRow(0)
 
-    def RightImageFromFile(self) :
-        #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
-        self.qPixmapFileVar = QPixmap()
-        self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
-        self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
-        self.image_Label.setPixmap(self.qPixmapFileVar)
-        return self.count_load_image
 
-    def test(self):
-        print("hello")
+        # self.count_load_image -= 1
+        # #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
+        # self.qPixmapFileVar = QPixmap()
+        # self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
+        # self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
+        # self.image_Label.setPixmap(self.qPixmapFileVar)
+
+
+    def dragEnterEvent(self, event):            #드래그 앤 드랍을 구현
+            if event.mimeData().hasUrls():
+                event.accept()
+            else:
+                event.ignore()
+
+    def dropEvent(self, event):
+            files = [u.toLocalFile() for u in event.mimeData().urls()]
+            for f in files:
+                print(f)
+
+    isDragging = False  # 마우스 드래그 상태 저장
+    x0, y0, w, h = -1, -1, -1, -1  # 영역 선택 좌표 저장
+    blue, red = (255, 0, 0), (0, 0, 255)  # 색상 값
+
+    def onMouse(self, event, x, y, flags, param):  # 마우스 이벤트 핸들 함수  ---①
+        global isDragging, x0, y0, img  # 전역변수 참조
+        global x_point, y_point, w_point, h_point
+        global img_draw
+        if event == cv2.EVENT_LBUTTONDOWN:  # 왼쪽 마우스 버튼 다운, 드래그 시작 ---②
+            self.isDragging = True
+            self.x0 = x
+            self.y0 = y
+        elif event == cv2.EVENT_MOUSEMOVE:  # 마우스 움직임 ---③
+            if self.isDragging:  # 드래그 진행 중
+                img_draw = img.copy()  # 사각형 그림 표현을 위한 이미지 복제
+                cv2.rectangle(img_draw, (self.x0, self.y0), (x, y), self.blue, 2)  # 드래그 진행 영역 표시
+                cv2.imshow('img_draw', img_draw)  # 사각형 표시된 그림 화면 출력
+        elif event == cv2.EVENT_LBUTTONUP:  # 왼쪽 마우스 버튼 업 ---④
+            if self.isDragging:  # 드래그 중지
+                self.isDragging = False
+                self.w = x - self.x0  # 드래그 영역 폭 계산
+                self.h = y - self.y0  # 드래그 영역 높이 계산
+                print("x:%d, y:%d, w:%d, h:%d" % (self.x0, self.y0, self.w, self.h))
+                x_point = str(self.x0)
+                y_point = str(self.y0)
+                w_point = str(self.w)
+                h_point = str(self.h)
+                if self.w > 0 and self.h > 0:  # 폭과 높이가 양수이면 드래그 방향이 옳음 ---⑤
+                    img_draw = img.copy()  # 선택 영역에 사각형 그림을 표시할 이미지 복제
+                    # 선택 영역에 빨간 사각형 표시
+                    cv2.rectangle(img_draw, (self.x0, self.y0), (x, y), self.red, 2)
+                    cv2.imshow('img_draw', img_draw)  # 빨간 사각형 그려진 이미지 화면 출력
+                    # roi = img[self.y0:self.y0 + self.h, self.x0:self.x0 + self.w]  # 원본 이미지에서 선택 영영만 ROI로 지정 ---⑥
+                    # cv2.imshow('cropped', roi)  # ROI 지정 영역을 새창으로 표시
+                    # cv2.moveWindow('cropped', 0, 0)  # 새창을 화면 좌측 상단에 이동
+                    # cv2.imwrite('./cropped.jpg', roi)  # ROI 영역만 파일로 저장 ---⑦
+                    # print("croped.")
+                else:
+                    #cv2.imshow('img', img)  # 드래그 방향이 잘못된 경우 사각형 그림ㅇㅣ 없는 원본 이미지 출력
+                    print("좌측 상단에서 우측 하단으로 영역을 드래그 하세요.")
+        elif event == cv2.EVENT_RBUTTONDOWN:        #cv2.EVENT_RBUTTONDBCKL은 macOS Montrey, openCV4.5 python3.7에서 지원되지 않음
+            print("destroyWindow")
+            cv2.destroyWindow('img_draw')
 
 
     def Image_Labling(self):            #파일의 경로를 받아올 수 있도록 함
         global img  #전역변수 참조
         global x_point, y_point, w_point, h_point #전역변수 참조
         global img_draw
-        Labeled_data_path = '/Users/leehoseop/Data_Creator_Project_for_drone_cop/#4.Labeled_Data/Full_Data/' #라벨링한 이미지의 경로를 지정
+        Labeled_data_path = self.directory_path #라벨링한 이미지의 경로를 지정
         path_dir = QFileDialog.getExistingDirectory(self, 'Open File')
         file_list = os.listdir(path_dir)
         file_list.sort()
@@ -127,9 +211,9 @@ class WindowClass(QMainWindow, form_class) :
             print("img_load_fail")
             sys.exit()
 
-        i = 2
+        i = 1
         while i < len(file_list):
-            img_name = path_dir + '/' + file_list[i]
+            img_name = path_dir + "/" + file_list[i]
             print(file_list[i])
             print(img_name)
             img = cv2.imread(img_name, cv2.IMREAD_COLOR)
@@ -145,22 +229,18 @@ class WindowClass(QMainWindow, form_class) :
                 print('Next_img:   ', key)
 
                 i += 1
-                # img_name = path_dir + '/' + file_list[i]
-                # img = cv2.imread(img_name, cv2.IMREAD_COLOR)
-                cv2.imshow("Drone_cop_db_Auto_chase_"+str(i-1).zfill(5)+".jpg", img)
-                cv2.destroyWindow("Drone_cop_db_Auto_chase_" + str(i - 2).zfill(5) + ".jpg")
+                cv2.imshow("index number" + str(i) + self.ext, img)
+                cv2.destroyWindow("index number" + str(i-1)  + self.ext)
 
             elif key == 98:  # 'b'를 누르면 이전사진
                 print('Previous_img:   ', key)
                 i -= 1
-                # img_name = path_dir + '/' + file_list[i]
-                # img = cv2.imread(img_name, cv2.IMREAD_COLOR)
-                cv2.imshow("Drone_cop_db_Auto_chase_"+str(i-1).zfill(5)+".jpg", img)
-                cv2.destroyWindow("Drone_cop_db_Auto_chase_" + str(i - 2).zfill(5) + ".jpg")
+                cv2.imshow("index number" + str(i) + self.ext, img)
+                cv2.destroyWindow("index number" + str(i+1)  + self.ext)
 
             elif key ==  32:  # 'spacebar'를 누르면 라벨링
                 print('Mouse_Event')
-                cv2.imshow('img_draw', img)
+                cv2.imshow('%s' %(str(i)), img)
                 cv2.setMouseCallback('img_draw', self.onMouse)  # 마우스 이벤트 등록 ---⑧
 
                 self.hide()         #메인윈도우 숨김
@@ -172,6 +252,7 @@ class WindowClass(QMainWindow, form_class) :
                 selected_object = query
                 object_number = None
                 production = None
+
                 if selected_object == "drone":
                     object_number = "1"
                     production = None
@@ -212,11 +293,11 @@ class WindowClass(QMainWindow, form_class) :
                 file_data["number"] = "%s" %object_number
 
                 print(json.dumps(file_data, ensure_ascii=False, indent="\t"))
-            #
+
             # elif key == 109: # 'm'을 누르면 json파일 저장 및 이미지 복사r
-                with open(Labeled_data_path+file_list[i]+'.json', 'w', encoding="utf-8") as make_file:
+                with open(self.directory_path + file_list[i] + '.json', 'w', encoding="utf-8") as make_file:
                     json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
-                shutil.copy(img_name, Labeled_data_path)
+                shutil.copy(self.file_name, self.directory_path)
                 beep.beep(sound=1)
                 cv2.waitKey()
                 cv2.destroyWindow('img_draw')
@@ -226,6 +307,18 @@ class WindowClass(QMainWindow, form_class) :
                 cv2.destroyAllWindows()
                 self.show()             #두번째창 닫으면 다시 첫 번째 창 보여 짐
                 break
+
+    # def Clicked_list_item(self, current):
+    #     currentItem = self.listWidget(current)
+    #     print(currentItem)
+    #     pixmap = currentItem.getPixmap()
+    #     imagePath = currentItem.getImagePath()
+    #     lblTxt = currentItem.getText()
+    #
+    #     self.qPixmapFileVar = QPixmap()
+    #     self.qPixmapFileVar.load(self.images_path + currentItem)
+    #     self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
+    #     self.image_Label.setPixmap(self.qPixmapFileVar)
 
     # def loadImageFromWeb(self) :
     #
@@ -243,6 +336,7 @@ class WindowClass(QMainWindow, form_class) :
     #     #Label에서 표시하고 있는 사진 데이터를 QPixmap객체의 형태로 반환받은 후, save함수를 이용해 사진 저장
     #     self.qPixmapSaveVar = self.lbl_picture.pixmap()
     #     self.qPixmapSaveVar.save("SavedImage.jpg")
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
