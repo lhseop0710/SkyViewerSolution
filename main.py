@@ -308,8 +308,6 @@ class WindowClass(QMainWindow, form_class) :
                 self.show()             #두번째창 닫으면 다시 첫 번째 창 보여 짐
                 break
 
-    def sayhello(self):
-        print("hello")
 
     # def Clicked_list_item(self, current):
     #     currentItem = self.listWidget(current)
