@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
+import numpy as np
 import urllib.request
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -13,9 +14,7 @@ import cv2
 import beep
 import shutil
 from collections import OrderedDict
-# import
 
-# panoramic360.panoramic360.return_home()
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
 
 class WindowClass(QMainWindow, form_class) :
@@ -29,7 +28,6 @@ class WindowClass(QMainWindow, form_class) :
 
     def initUI(self):
         self.show()
-
 
     def __init__(self) :
         super().__init__()
@@ -125,71 +123,6 @@ class WindowClass(QMainWindow, form_class) :
             self.image_Label.setPixmap(self.qPixmapFileVar)
         else :
             self.listWidget.setCurrentRow(0)
-
-
-        # self.count_load_image -= 1
-        # #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
-        # self.qPixmapFileVar = QPixmap()
-        # self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
-        # self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
-        # self.image_Label.setPixmap(self.qPixmapFileVar)
-
-
-    def dragEnterEvent(self, event):            #드래그 앤 드랍을 구현
-            if event.mimeData().hasUrls():
-                event.accept()
-            else:
-                event.ignore()
-
-    def dropEvent(self, event):
-            files = [u.toLocalFile() for u in event.mimeData().urls()]
-            for f in files:
-                print(f)
-
-    isDragging = False  # 마우스 드래그 상태 저장
-    x0, y0, w, h = -1, -1, -1, -1  # 영역 선택 좌표 저장
-    blue, red = (255, 0, 0), (0, 0, 255)  # 색상 값
-
-    def onMouse(self, event, x, y, flags, param):  # 마우스 이벤트 핸들 함수  ---①
-        global isDragging, x0, y0, img  # 전역변수 참조
-        global x_point, y_point, w_point, h_point
-        global img_draw
-        if event == cv2.EVENT_LBUTTONDOWN:  # 왼쪽 마우스 버튼 다운, 드래그 시작 ---②
-            self.isDragging = True
-            self.x0 = x
-            self.y0 = y
-        elif event == cv2.EVENT_MOUSEMOVE:  # 마우스 움직임 ---③
-            if self.isDragging:  # 드래그 진행 중
-                img_draw = img.copy()  # 사각형 그림 표현을 위한 이미지 복제
-                cv2.rectangle(img_draw, (self.x0, self.y0), (x, y), self.blue, 2)  # 드래그 진행 영역 표시
-                cv2.imshow('img_draw', img_draw)  # 사각형 표시된 그림 화면 출력
-        elif event == cv2.EVENT_LBUTTONUP:  # 왼쪽 마우스 버튼 업 ---④
-            if self.isDragging:  # 드래그 중지
-                self.isDragging = False
-                self.w = x - self.x0  # 드래그 영역 폭 계산
-                self.h = y - self.y0  # 드래그 영역 높이 계산
-                print("x:%d, y:%d, w:%d, h:%d" % (self.x0, self.y0, self.w, self.h))
-                x_point = str(self.x0)
-                y_point = str(self.y0)
-                w_point = str(self.w)
-                h_point = str(self.h)
-                if self.w > 0 and self.h > 0:  # 폭과 높이가 양수이면 드래그 방향이 옳음 ---⑤
-                    img_draw = img.copy()  # 선택 영역에 사각형 그림을 표시할 이미지 복제
-                    # 선택 영역에 빨간 사각형 표시
-                    cv2.rectangle(img_draw, (self.x0, self.y0), (x, y), self.red, 2)
-                    cv2.imshow('img_draw', img_draw)  # 빨간 사각형 그려진 이미지 화면 출력
-                    # roi = img[self.y0:self.y0 + self.h, self.x0:self.x0 + self.w]  # 원본 이미지에서 선택 영영만 ROI로 지정 ---⑥
-                    # cv2.imshow('cropped', roi)  # ROI 지정 영역을 새창으로 표시
-                    # cv2.moveWindow('cropped', 0, 0)  # 새창을 화면 좌측 상단에 이동
-                    # cv2.imwrite('./cropped.jpg', roi)  # ROI 영역만 파일로 저장 ---⑦
-                    # print("croped.")
-                else:
-                    #cv2.imshow('img', img)  # 드래그 방향이 잘못된 경우 사각형 그림ㅇㅣ 없는 원본 이미지 출력
-                    print("좌측 상단에서 우측 하단으로 영역을 드래그 하세요.")
-        elif event == cv2.EVENT_RBUTTONDOWN:        #cv2.EVENT_RBUTTONDBCKL은 macOS Montrey, openCV4.5 python3.7에서 지원되지 않음
-            print("destroyWindow")
-            cv2.destroyWindow('img_draw')
-
 
     def Image_Labling(self):            #파일의 경로를 받아올 수 있도록 함
         global img  #전역변수 참조
