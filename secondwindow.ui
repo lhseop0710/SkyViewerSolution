@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>378</width>
-    <height>421</height>
+    <height>742</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,47 +63,47 @@ p, li { white-space: pre-wrap; }
    </property>
    <item>
     <property name="text">
-     <string>drone</string>
+     <string>information_center</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>Plane</string>
+     <string>ticket_box</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>helicoptor</string>
+     <string>information_board</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>dji_phantom</string>
+     <string>life_saving_goods</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>dji_mavic</string>
+     <string>defibrillators</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>dji_inspire</string>
+     <string>toilet</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>parrot bibop</string>
+     <string>tourist_attraction</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>RC_Plane</string>
+     <string>building</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>RC_helicoptor</string>
+     <string>store</string>
     </property>
    </item>
   </widget>
@@ -201,8 +201,8 @@ p, li { white-space: pre-wrap; }
   <widget class="QPushButton" name="Save_btn">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>230</y>
+     <x>134</x>
+     <y>700</y>
      <width>113</width>
      <height>32</height>
     </rect>
@@ -215,7 +215,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>320</y>
+     <y>230</y>
      <width>113</width>
      <height>32</height>
     </rect>
@@ -228,13 +228,166 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>360</y>
+     <y>331</y>
      <width>113</width>
-     <height>32</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
     <string>Return Home</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>12</x>
+     <y>409</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>3. GPS information</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="Object_name_textEdit_2">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>430</y>
+     <width>351</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;41.8987040N, 87.6231670W&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>12</x>
+     <y>479</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>4. Image_point x, y</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="Object_name_textEdit_3">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>500</y>
+     <width>351</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;41.8987040N, 87.6231670W&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="item_label_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>660</y>
+     <width>160</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string>point_x :  51.0000</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="item_label_3">
+   <property name="geometry">
+    <rect>
+     <x>193</x>
+     <y>660</y>
+     <width>170</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string>point_y :  140.0000</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>102</x>
+     <y>570</y>
+     <width>170</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Image_Information_Check</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="item_label_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>610</y>
+     <width>160</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string>object_number :  1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="item_label_5">
+   <property name="geometry">
+    <rect>
+     <x>193</x>
+     <y>610</y>
+     <width>170</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string>name: information_center</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>546</y>
+     <width>341</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="lineWidth">
+    <number>2</number>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
  </widget>

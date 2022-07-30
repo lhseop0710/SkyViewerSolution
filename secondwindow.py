@@ -10,6 +10,7 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setFixedSize(380,770)                        #창크기 고정
         self.initUI()
         self.show() #두번째창 실행
 

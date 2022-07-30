@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
 import os
-import numpy as np
 import urllib.request
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -14,7 +13,6 @@ import cv2
 import beep
 import shutil
 from collections import OrderedDict
-
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
 
 class WindowClass(QMainWindow, form_class) :
@@ -28,6 +26,7 @@ class WindowClass(QMainWindow, form_class) :
 
     def initUI(self):
         self.show()
+
 
     def __init__(self) :
         super().__init__()
@@ -124,9 +123,56 @@ class WindowClass(QMainWindow, form_class) :
         else :
             self.listWidget.setCurrentRow(0)
 
+
+        # self.count_load_image -= 1
+        # #QPixmap 객체 생성 후 이미지 파일을 이용하여 QPixmap에 사진 데이터 Load하고, Label을 이용하여 화면에 표시
+        # self.qPixmapFileVar = QPixmap()
+        # self.qPixmapFileVar.load(self.directory_path+self.file_name+str(self.count_load_image).zfill(4)+self.ext)
+        # self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
+        # self.image_Label.setPixmap(self.qPixmapFileVar)
+
+
+    def dragEnterEvent(self, event):            #드래그 앤 드랍을 구현
+            if event.mimeData().hasUrls():
+                event.accept()
+            else:
+                event.ignore()
+
+    def dropEvent(self, event):
+            files = [u.toLocalFile() for u in event.mimeData().urls()]
+            for f in files:
+                print(f)
+
+    clicked_points = []
+    blue, red = (255, 0, 0), (0, 0, 255)  # 색상 값
+
+    def onMouse(self, event, x, y, flags, param):  # 마우스 이벤트 핸들 함수  ---①
+        global isDragging, x0, y0, img  # 전역변수 참조
+        global x_point, y_point, w_point, h_point
+        global img_draw
+        if event == cv2.EVENT_LBUTTONDOWN:  # 왼쪽 마우스 버튼 다운, 드래그 시작 ---②
+            self.clicked_points.append((x,y))
+        elif event == cv2.EVENT_LBUTTONUP:  # 왼쪽 마우스 버튼 업 ---④
+            img_draw = img.copy()  # 선택 영역에 사각형 그림을 표시할 이미지 복제
+            for point in self.clicked_points:
+            # 선택 영역에 빨간 사각형 표시
+                cv2.circle(img_draw, (point[0], point[1]), 2, self.red, thickness = -1)
+                cv2.imshow('img_draw', img_draw)  # 빨간 사각형 그려진 이미지 화면 출력
+                # if self.w > 0 and self.h > 0:  # 폭과 높이가 양수이면 드래그 방향이 옳음 ---⑤
+                #     img_draw = img.copy()  # 선택 영역에 사각형 그림을 표시할 이미지 복제
+                #     # 선택 영역에 빨간 사각형 표시
+                #     cv2.circle(img_draw, (self.clicked_points[0], 3, self.red, 2)
+                #     cv2.imshow('img_draw', img_draw)  # 빨간 사각형 그려진 이미지 화면 출력
+                # else:
+                #     #cv2.imshow('img', img)  # 드래그 방향이 잘못된 경우 사각형 그림ㅇㅣ 없는 원본 이미지 출력
+                #     print("좌측 상단에서 우측 하단으로 영역을 드래그 하세요.")
+        # elif event == cv2.EVENT_RBUTTONDOWN:        #cv2.EVENT_RBUTTONDBCKL은 macOS Montrey, openCV4.5 python3.7에서 지원되지 않음
+        #     print("destroyWindow")
+        #     cv2.destroyWindow('img_draw')
+
     def Image_Labling(self):            #파일의 경로를 받아올 수 있도록 함
         global img  #전역변수 참조
-        global x_point, y_point, w_point, h_point #전역변수 참조
+        global clicked_points #전역변수 참조
         global img_draw
         Labeled_data_path = self.directory_path #라벨링한 이미지의 경로를 지정
         path_dir = QFileDialog.getExistingDirectory(self, 'Open File')
@@ -147,6 +193,7 @@ class WindowClass(QMainWindow, form_class) :
         i = 1
         while i < len(file_list):
             img_name = path_dir + "/" + file_list[i]
+            print(path_dir)
             print(file_list[i])
             print(img_name)
             img = cv2.imread(img_name, cv2.IMREAD_COLOR)
@@ -174,7 +221,7 @@ class WindowClass(QMainWindow, form_class) :
             elif key ==  32:  # 'spacebar'를 누르면 라벨링
                 print('Mouse_Event')
                 cv2.imshow('%s' %(str(i)), img)
-                cv2.setMouseCallback('img_draw', self.onMouse)  # 마우스 이벤트 등록 ---⑧
+                cv2.setMouseCallback('img_draw', self.onMouse)  # 마우스 이벤트 소환 ---⑧
 
                 self.hide()         #메인윈도우 숨김
                 self.second = secondwindow()    #두번째창 생성
@@ -186,31 +233,31 @@ class WindowClass(QMainWindow, form_class) :
                 object_number = None
                 production = None
 
-                if selected_object == "drone":
+                if selected_object == "information center":     #안내소
                     object_number = "1"
                     production = None
-                elif selected_object == "Plane":
+                elif selected_object == "ticket box":           #매표소
                     object_number = "2"
                     production = None
-                elif selected_object == "helicoptor":
+                elif selected_object == "information board":    #안내판
                     object_number = "3"
                     production = None
-                elif selected_object == "dji_phantom":
+                elif selected_object == "life saving goods":    #인명구호용품
                     object_number = "4"
-                    production = "dji"
-                elif selected_object == "dji_mavic":
+                    production = None
+                elif selected_object == "defibrillators":       #심장제세동기
                     object_number = "5"
-                    production = "dji"
-                elif selected_object == "dji_inspire":
+                    production = None
+                elif selected_object == "toilet":               #화장실
                     object_number = "6"
-                    production = "dji"
-                elif selected_object == "parrot_bibop":
+                    production = None
+                elif selected_object == "tourist attraction":   #관광명소
                     object_number = "7"
-                    production = "parrot"
-                elif selected_object == "rc_plane":
+                    production = None
+                elif selected_object == "building":             #건물
                     object_number = "8"
                     production = None
-                elif selected_object == "rc_helicoptor":
+                elif selected_object == "store":               #상점
                     object_number = "9"
                     production = None
 
@@ -220,14 +267,12 @@ class WindowClass(QMainWindow, form_class) :
                 file_data["filename"] = "%s" %selected_object
                 file_data["shapes"] = {'label': '%s' % str(query),
                                        'production_company': "%s" %production,
-                                       'points': [[x_point, y_point],
-                                                  [w_point, h_point]],
-                                       }
+                                       'points': [clicked_points]}
                 file_data["number"] = "%s" %object_number
 
                 print(json.dumps(file_data, ensure_ascii=False, indent="\t"))
 
-            # elif key == 109: # 'm'을 누르면 json파일 저장 및 이미지 복사r
+            elif key == 109: # 'm'을 누르면 json파일 저장 및 이미지 복사
                 with open(self.directory_path + file_list[i] + '.json', 'w', encoding="utf-8") as make_file:
                     json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
                 shutil.copy(self.file_name, self.directory_path)
