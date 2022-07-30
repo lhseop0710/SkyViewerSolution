@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>Panolens.js panorama image panorama</title>
+    <style>
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+      }
+
+      a:link, a:visited{
+        color: #bdc3c7;
+      }
+
+      .credit{
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        padding: 20px 0;
+        color: #fff;
+      }
+
+      #desc-container {         
+        max-width: 500px;
+        max-height: 500px;
+        min-width: 200px;
+        min-height: 250px;
+        background: #fff;
+        color: #000;
+        border-radius: 3px;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #desc-container > iframe {
+        border: none;
+        width:100%;
+      }
+
+      .title {
+        font-size: 1.5em;
+        text-align: center;
+        padding: 5px;
+      }
+
+      .text {
+        padding: 0 20px 20px 20px;
+      }
+    </style>
+  </head>
+<!-- desc-container 부분은 사이즈 정책 디자인임 -->
+  <body>
+
+    <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
+    
+    <div id="desc-container" style="display:none">
+      <iframe src="https://www.youtube.com/embed/_gep8hwWSNM"></iframe>
+      <div class="title">내 매빅 박살나기 전 찍은 동영상</div>
+      <div class="text">내 매빅 이거 찍고 박살났었을때 마음 아팠는데...</div>
+    </div>
+    <!-- //유투브 영상을 위처럼 선언해두고 바디부분에서 끌어당겨 쓰는 형식 -->
+
+    <script src="three.min.js"></script>
+    <script src="panolens.min.js"></script>
+
+    <script>
+      var panorama1, panorama2, panorama3, panorama4, viewer
+      var infospot, infospot2, infospot3
+
+      panorama1 = new PANOLENS.ImagePanorama( './panorama_images/DJI_0000.JPG' );
+      panorama2 = new PANOLENS.ImagePanorama( './panorama_images/DJI_0001.JPG' );
+      panorama3 = new PANOLENS.ImagePanorama( './panorama_images/DJI_0002.JPG' );
+      panorama4 = new PANOLENS.ImagePanorama( './panorama_images/DJI_0003.JPG' );
+
+
+      //const panoImage = './panorama_images/sky_view_test.jpg';
+      //const panorama = new PANOLENS.ImagePanorama( panoImage );
+      //const viewer = new PANOLENS.Viewer( { output: 'console' } );
+      
+      //var Infospot = new PANOLENS.Infospot();
+      //Infospot.position.set(5000.00, 200, 600);
+      //Infospot.addHoverText('청주대학교 도서관')
+
+      //Infospot.addEventListener('click',function(){
+      //      window.location.href='https://naver.com';
+      //});
+
+      
+      //panorama.add( Infospot ) ;
+      
+      viewer = new PANOLENS.Viewer({
+        container: document.body,        // A DOM Element container
+        controlBar: true,             // Vsibility of bottom control bar
+        controlButtons: [],            // Buttons array in the control bar. Default to ['fullscreen', 'setting', 'video']
+        autoHideControlBar: false,        // Auto hide control bar
+        autoHideInfospot: false,            // Auto hide infospots
+        horizontalView: false,            // Allow only horizontal camera control
+        cameraFov: 60,                // Camera field of view in degree
+        reverseDragging: false,            // Reverse orbit control direction
+        enableReticle: false,            // Enable reticle for mouseless interaction
+        dwellTime: 1500,            // Dwell time for reticle selection in millisecond
+        autoReticleSelect: true,        // Auto select a clickable target after dwellTime
+        viewIndicator: false,            // Adds an angle view indicator in upper left corner
+        indicatorSize: 30,            // Size of View Indicator
+        output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
+    });
+
+
+      infospot = new PANOLENS.Infospot();
+      infospot.position.set(5000.00, 200, 600);
+      infospot.addHoverText('청주대학교 도서관\nClick 링크이동')
+
+      infospot2 = new PANOLENS.Infospot( 300, PANOLENS.DataImage.Info );
+      infospot2.position.set( -5000.00, -1825.25, 197.56 );
+      infospot2.addHoverElement( document.getElementById( 'desc-container' ), 200 );
+
+      infospot.addEventListener('click',function(){
+        this.focus();
+        window.location.href='https://library.cju.ac.kr/';
+        let element = document.createElement( 'div' );
+        element.style.backgroundColor = '#fff';
+        element.style.maxWidth = '200px';
+        element.style.maxHeight = '200px';
+        element.style.fontFamily = '"Trebuchet MS", Helvetica, sans-serif';
+        element.style.position = 'absolute';
+        document.body.appendChild(element);
+      });
+      
+      panorama1.add(infospot);
+      panorama1.add(infospot2);
+      viewer.add( panorama1 );
+      viewer.add( panorama2 );
+      viewer.add( panorama3 );
+      viewer.add( panorama4 );
+
+    //Linking between panorama images
+    panorama1.link(panorama2, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
+    panorama2.link(panorama1, new THREE.Vector3(-5000, -1500, -400), 1500, './direction_pointer.png');
+
+    panorama2.link(panorama3, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
+    panorama3.link(panorama2, new THREE.Vector3(-5000, -1500, -400), 1500, './direction_pointer.png');
+
+    panorama3.link(panorama4, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
+    panorama4.link(panorama3, new THREE.Vector3(-5000, -1500, 1000), 1500, './direction_pointer.png');
+    </script>
+  </body>
+</html>

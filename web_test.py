@@ -4,6 +4,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(400, 300)
+        # self.widget_youtube.setGeometry(QtCore.QRect(15, 12, 1200, 675))
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.centralwidget = QtWidgets.QWidget(Dialog)

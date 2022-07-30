@@ -1,0 +1,19 @@
+{
+	"version": "1.0.0",
+	"filename": "drone",
+	"shapes": {
+		"label": "drone",
+		"production_company": "None",
+		"points": [
+			[
+				"3917",
+				"1676"
+			],
+			[
+				"516",
+				"338"
+			]
+		]
+	},
+	"number": "1"
+}
