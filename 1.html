@@ -108,8 +108,14 @@
         viewIndicator: false,            // Adds an angle view indicator in upper left corner
         indicatorSize: 30,            // Size of View Indicator
         output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
-    });
-
+      });
+      
+      panorama1.add(infospot);
+      panorama1.add(infospot2);
+      viewer.add( panorama1 );
+      viewer.add( panorama2 );
+      viewer.add( panorama3 );
+      viewer.add( panorama4 );
 
       infospot = new PANOLENS.Infospot();
       infospot.position.set(5000.00, 200, 600);
@@ -130,23 +136,16 @@
         element.style.position = 'absolute';
         document.body.appendChild(element);
       });
-      
-      panorama1.add(infospot);
-      panorama1.add(infospot2);
-      viewer.add( panorama1 );
-      viewer.add( panorama2 );
-      viewer.add( panorama3 );
-      viewer.add( panorama4 );
-
     //Linking between panorama images
-    panorama1.link(panorama2, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
-    panorama2.link(panorama1, new THREE.Vector3(-5000, -1500, -400), 1500, './direction_pointer.png');
+      panorama1.link(panorama2, new THREE.Vector3(5000, -1500, 400), 700, 'direction_pointer.png');
+      panorama2.link(panorama1, new THREE.Vector3(-5000, -1000, 200), 700, 'direction_pointer2.png');
 
-    panorama2.link(panorama3, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
-    panorama3.link(panorama2, new THREE.Vector3(-5000, -1500, -400), 1500, './direction_pointer.png');
+      panorama2.link(panorama3, new THREE.Vector3(5000, -1500, 400), 700, 'direction_pointer.png');
+      panorama3.link(panorama2, new THREE.Vector3(-5000, -1500, -400), 700, 'direction_pointer.png');
 
-    panorama3.link(panorama4, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
-    panorama4.link(panorama3, new THREE.Vector3(-5000, -1500, 1000), 1500, './direction_pointer.png');
+      panorama3.link(panorama4, new THREE.Vector3(5000, -1500, 400), 700, 'direction_pointer.png');
+      panorama4.link(panorama3, new THREE.Vector3(-5000, -1500, 1000), 700, 'direction_pointer.png');
     </script>
+
   </body>
 </html>

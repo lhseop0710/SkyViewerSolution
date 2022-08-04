@@ -26,19 +26,6 @@ class WindowClass(QMainWindow, form_class) :
     background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/SVS_background2.png"
     widget_List = []
     def initUI(self, Dialog):
-        ##
-        # self.widget_panoview = QtWidgets,QWidget(self.centralwidget)
-        # self.widget_List.append(self.widget_panoview)
-        # self.widget_youtube.setGeometry(QtCore.QRect(2, 100, 500, 300))
-        # self.centralwidget.setObjectName("Panorama_Viewer_360")
-        # self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
-        # self.verticalLayout.setObjectName("verticalLayout")
-        # self.centralwidget = QtWidgets.QWidget(Dialog)
-        # self.centralwidget.setObjectName("centralwidget")
-        # self.webEngineView = QtWebEngineWidgets.QWebEngineView(self.centralwidget)
-        # self.webEngineView.load(QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0]+r'/2.html'))
-        # self.verticalLayout.addWidget(self.webEngineView)
-        ##
         self.show()
 
 
@@ -56,10 +43,7 @@ class WindowClass(QMainWindow, form_class) :
         ##
         self.widget_pano = QtWidgets.QWidget(self.centralwidget)
         self.widget_List.append(self.widget_pano)
-        # self.widget_pano.setGeometry(QtCore.QRect(2, 100, 500, 300))
-        # self.widget_youtube.setStyleSheet("background-color: rgb(84, 84, 84);")
         self.widget_pano.setObjectName("widget_youtube")
-
         self.webview = QtWebEngineWidgets.QWebEngineView(self.widget_pano)
         self.webview.load(QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0]+r'/2.html'))
         self.webview.setGeometry(15, 12, 1200, 675)

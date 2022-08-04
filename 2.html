@@ -60,8 +60,8 @@
     
     <div id="desc-container" style="display:none">
       <iframe src="https://www.youtube.com/embed/_gep8hwWSNM"></iframe>
-      <div class="title">내 매빅 박살나기 전 찍은 동영상</div>
-      <div class="text">내 매빅 이거 찍고 박살났었을때 마음 아팠는데...</div>
+      <div class="title">만년호사원의 매빅에어2 항공촬영</div>
+      <div class="text">테스트 "이 영상을 찍고 매빅에어2는 장렬히 전사하였다."...</div>
     </div>
     <!-- //유투브 영상을 위처럼 선언해두고 바디부분에서 끌어당겨 쓰는 형식 -->
 
@@ -70,7 +70,7 @@
 
     <script>
       var panorama1, panorama2, panorama3, panorama4, viewer
-      var infospot, infospot2, infospot3
+      var infospot1, infospot2, infospot3
 
       panorama1 = new PANOLENS.ImagePanorama( './panorama_images/DJI_0000.JPG' );
       panorama2 = new PANOLENS.ImagePanorama( './panorama_images/DJI_0001.JPG' );
@@ -108,20 +108,21 @@
         viewIndicator: false,            // Adds an angle view indicator in upper left corner
         indicatorSize: 30,            // Size of View Indicator
         output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
-    });
+      });
 
 
-      infospot = new PANOLENS.Infospot();
-      infospot.position.set(5000.00, 200, 600);
-      infospot.addHoverText('청주대학교 도서관\nClick 링크이동')
+      infospot1 = new PANOLENS.Infospot();
+      infospot1.position.set(5000.00, 200, 600);
+      infospot1.addHoverText('청주대학교 도서관\nClick 링크이동')
 
       infospot2 = new PANOLENS.Infospot( 300, PANOLENS.DataImage.Info );
       infospot2.position.set( -5000.00, -1825.25, 197.56 );
       infospot2.addHoverElement( document.getElementById( 'desc-container' ), 200 );
 
-      infospot.addEventListener('click',function(){
+      infospot1.addEventListener('click',function(){
         this.focus();
-        window.location.href='https://library.cju.ac.kr/';
+        window.open('https://library.cju.ac.kr/',"파노라마 새창",location);
+        //window.location.href='https://library.cju.ac.kr/';
         let element = document.createElement( 'div' );
         element.style.backgroundColor = '#fff';
         element.style.maxWidth = '200px';
@@ -136,8 +137,14 @@
         const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
         console.log('click panorama\n', e, 'point\n', a);
       });
-      
-      panorama1.add(infospot);
+
+      panorama2.addEventListener("click", function(e){
+        if (e.intersects.length > 0) return;
+        const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+        console.log('click panorama\n', e, 'point\n', a);
+      });
+
+      panorama1.add(infospot1);
       panorama1.add(infospot2);
       viewer.add( panorama1 );
       viewer.add( panorama2 );
@@ -145,14 +152,14 @@
       viewer.add( panorama4 );
 
     //Linking between panorama images
-    panorama1.link(panorama2, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
-    panorama2.link(panorama1, new THREE.Vector3(-5000, -1500, -400), 1500, './direction_pointer.png');
+      panorama1.link(panorama2, new THREE.Vector3(5000, -1500, 400), 700, 'direction_pointer.png');
+      panorama2.link(panorama1, new THREE.Vector3(-5000, -700, 200), 700, 'direction_pointer.png');
 
-    panorama2.link(panorama3, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
-    panorama3.link(panorama2, new THREE.Vector3(-5000, -1500, -400), 1500, './direction_pointer.png');
+      panorama2.link(panorama3, new THREE.Vector3(5000, -1500, 400), 700, 'direction_pointer.png');
+      panorama3.link(panorama2, new THREE.Vector3(-5000, -1500, -400), 700, 'direction_pointer.png');
 
-    panorama3.link(panorama4, new THREE.Vector3(5000, -1500, 400), 1500, './direction_pointer.png');
-    panorama4.link(panorama3, new THREE.Vector3(-5000, -1500, 1000), 1500, './direction_pointer.png');
+      panorama3.link(panorama4, new THREE.Vector3(5000, -1500, 400), 700, 'direction_pointer.png');
+      panorama4.link(panorama3, new THREE.Vector3(-5000, -1500, 1000), 700, 'direction_pointer.png');
     </script>
   </body>
 </html>
