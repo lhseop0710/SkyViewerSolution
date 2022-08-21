@@ -135,13 +135,13 @@
       panorama1.addEventListener("click", function(e){
         if (e.intersects.length > 0) return;
         const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
-        console.log('click panorama\n', e, 'point\n', a);
+        console.log(JSON.stringify(a));
       });
 
       panorama2.addEventListener("click", function(e){
-        if (e.intersects.length > 0) return;
+        if (e.intersects.length > 0) return
         const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
-        console.log('click panorama\n', e, 'point\n', a);
+        console.log(' click panorama\n', e, 'point\n', a);
       });
 
       panorama1.add(infospot1);

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 import sys
 import os
-import urllib.request
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
-from PyQt5 import QtCore,QtWidgets, QtWebEngineWidgets
+from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
+from PyQt5.QtWebEngineWidgets import QWebEnginePage
+from PyQt5.QtWebChannel import QWebChannel
+from PyQt5.QtCore import QObject, Qt
 from panoramic360 import panoramic360
 from secondwindow import secondwindow
 import json
@@ -14,7 +15,23 @@ import cv2
 import beep
 import shutil
 from collections import OrderedDict
+import utils
+
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
+
+class Handler(QObject):
+    def __init__(self, *args, **kwargs):
+        super(Handler, self).__init__(*args, **kwargs)
+
+class WebEnginePage(QWebEnginePage):
+    def __init__(self, *args, **kwargs):
+        super(WebEnginePage, self).__init__(*args, **kwargs)
+
+    def javaScriptConsoleMessage(self, level, message, lineNumber, sourceId):
+        l = message.split(",")
+        self.obj = l
+        print ('JS: %s line %d: %s' % (sourceId, lineNumber, message))
+        print("WebEnginePage Console: %s" %message)
 
 class WindowClass(QMainWindow, form_class) :
     count_load_image = 0
@@ -25,7 +42,11 @@ class WindowClass(QMainWindow, form_class) :
     images_path = []
     background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/SVS_background2.png"
     widget_List = []
-    def initUI(self, Dialog):
+    url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/2.html')
+
+
+
+    def initUI(self):
         self.show()
 
 
@@ -41,16 +62,33 @@ class WindowClass(QMainWindow, form_class) :
 
 
         ##
-        self.widget_pano = QtWidgets.QWidget(self.centralwidget)
-        self.widget_List.append(self.widget_pano)
-        self.widget_pano.setObjectName("widget_youtube")
-        self.webview = QtWebEngineWidgets.QWebEngineView(self.widget_pano)
-        self.webview.load(QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0]+r'/2.html'))
+        # self.widget_pano = QtWidgets.QWidget(self.centralwidget)
+        # self.widget_List.append(self.widget_pano)
+        # self.widget_pano.setObjectName("widget_youtube")
+
+        # Set up backend communication via web channel
+        self.handler = Handler()
+        self.channel = QWebChannel()
+
+        # Make the handler object available, naming it "backend"
+        self.channel.registerObject("backend", self.handler)
+
+        # Use a custom page that prints console messages to make debugging easier
+        self.page = WebEnginePage()
+        self.page.setWebChannel(self.channel)
+
+        # Use a webengine view
+        self.webview = QtWebEngineWidgets.QWebEngineView()
+        self.webview.setPage(self.page)
+        self.webview.setWindowFlags(Qt.WindowStaysOnTopHint)  #| Qt.FramelessWindowHint
         self.webview.setGeometry(15, 12, 1200, 675)
+        self.webview.setFixedSize(1200, 675)
+        self.webview.load(self.url)
+        self.webview.show()
         ##
 
-
         self.btn_loadFromFile.clicked.connect(self.File_Dialog)
+        # self.pushbutton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.btn_Delete_List.clicked.connect(self.Clear_File_List)
         self.listWidget.itemSelectionChanged.connect(self.File_list_itemSelectionChange)
         self.btn_SVS.clicked.connect(self.loadImageFromFile)
@@ -58,6 +96,12 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_Previous.clicked.connect(self.PreviousImageFromFile)
         self.btn_Image_Data_Generator.clicked.connect(self.Image_Labling)  #OpenCV창으로 넘어가도록 함
         self.listWidget.itemClicked.connect(self.Clicked_list_item)
+
+    def javaScriptConsoleMessage(self, level, message, lineNumber, sourceId):
+        l = message.split(",")
+        self.obj = l
+        print ('JS: %s line %d: %s' % (sourceId, lineNumber, message))
+        print("WebEnginePage Console: %s" %message)
 
     def File_Dialog(self):
         exts = ('.jpg', 'png', '.JPG', '.PNG')
@@ -299,6 +343,7 @@ class WindowClass(QMainWindow, form_class) :
                 break
 
 
+
     # def Clicked_list_item(self, current):
     #     currentItem = self.listWidget(current)
     #     print(currentItem)
@@ -328,11 +373,10 @@ class WindowClass(QMainWindow, form_class) :
     #     self.qPixmapSaveVar = self.lbl_picture.pixmap()
     #     self.qPixmapSaveVar.save("SavedImage.jpg")
 
-
 if __name__ == "__main__" :
+
     app = QApplication(sys.argv)
     myWindow = WindowClass()
+    # Make the handler object available, naming it "backend"
     myWindow.show()
-    # Dialog = QtWidgets.QDialog()
-    # Dialog.show()
     app.exec_()

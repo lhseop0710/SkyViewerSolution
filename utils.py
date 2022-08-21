@@ -1,5 +1,10 @@
 import cv2
 import numpy as np
+from PyQt5.QtWidgets import *
+from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
+from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
+from PySide2.QtCore import QUrl, Slot, QObject, QUrl
+import constant
 
 def mouse_handeler(event, x, y, flags, data):
     if event == cv2.EVENT_FLAG_LBUTTON:
@@ -21,3 +26,23 @@ def get_point(img):
     #마우스로 찍은 점을 float 형태로 변환
     point = np.array(data['points'], dtype=float)
     return point
+
+class Handler(QObject):
+    def __init__(self, *args, **kwargs):
+        super(Handler, self).__init__(*args, **kwargs)
+
+    @Slot(str, result=str)
+    def sayHello(self, name):
+        return f"Hello from the other side, {name}"
+
+
+class WebEnginePage(QWebEnginePage):
+    def __init__(self, *args, **kwargs):
+        super(WebEnginePage, self).__init__(*args, **kwargs)
+
+    def javaScriptConsoleMessage(self, level, message, lineNumber, sourceId):
+        l = message.split(",")
+        self.obj = l
+        print ('JS: %s line %d: %s' % (sourceId, lineNumber, message))
+        print("WebEnginePage Console: %s" %message)
+
