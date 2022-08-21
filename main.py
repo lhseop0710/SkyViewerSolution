@@ -59,6 +59,11 @@ class WindowClass(QMainWindow, form_class) :
         self.image_Label.setStyleSheet("background-image : url(%s)" %self.background_picture)
         self.image_Label.setAutoFillBackground(True)
 
+        # self.setCentralWidget(self.central_widget)
+        # self.vertical.addWidget(QTextEdit())
+        # self.vertical.addWidget(QTextEdit())
+
+
 
 
         ##
@@ -80,11 +85,14 @@ class WindowClass(QMainWindow, form_class) :
         # Use a webengine view
         self.webview = QtWebEngineWidgets.QWebEngineView()
         self.webview.setPage(self.page)
+        # self.setCentralWidget(self.webview)
         self.webview.setWindowFlags(Qt.WindowStaysOnTopHint)  #| Qt.FramelessWindowHint
         self.webview.setGeometry(15, 12, 1200, 675)
         self.webview.setFixedSize(1200, 675)
         self.webview.load(self.url)
-        self.webview.show()
+        self.webview_layout.addWidget(self.webview)
+        # self.horizontal.addLayout(self.vertical)
+        # self.webview.show()
         ##
 
         self.btn_loadFromFile.clicked.connect(self.File_Dialog)
