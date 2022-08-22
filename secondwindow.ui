@@ -47,9 +47,9 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>14</x>
-     <y>103</y>
+     <y>96</y>
      <width>231</width>
-     <height>221</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="dragEnabled">
@@ -124,7 +124,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>98</y>
+     <y>78</y>
      <width>113</width>
      <height>32</height>
     </rect>
@@ -137,7 +137,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>137</y>
+     <y>117</y>
      <width>113</width>
      <height>32</height>
     </rect>
@@ -150,7 +150,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>77</y>
+     <y>70</y>
      <width>101</width>
      <height>20</height>
     </rect>
@@ -163,20 +163,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>180</y>
-     <width>118</width>
-     <height>3</height>
-    </rect>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-  </widget>
-  <widget class="Line" name="line_2">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>214</y>
+     <y>157</y>
      <width>118</width>
      <height>3</height>
     </rect>
@@ -202,9 +189,9 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>230</y>
+     <y>167</y>
      <width>113</width>
-     <height>32</height>
+     <height>50</height>
     </rect>
    </property>
    <property name="text">
@@ -215,9 +202,9 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>250</x>
-     <y>282</y>
+     <y>215</y>
      <width>113</width>
-     <height>40</height>
+     <height>50</height>
     </rect>
    </property>
    <property name="text">
@@ -228,7 +215,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>12</x>
-     <y>340</y>
+     <y>273</y>
      <width>141</width>
      <height>16</height>
     </rect>
@@ -241,7 +228,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>15</x>
-     <y>361</y>
+     <y>294</y>
      <width>351</width>
      <height>30</height>
     </rect>
@@ -258,7 +245,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>12</x>
-     <y>460</y>
+     <y>393</y>
      <width>81</width>
      <height>16</height>
     </rect>
@@ -271,7 +258,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>15</x>
-     <y>481</y>
+     <y>414</y>
      <width>161</width>
      <height>30</height>
     </rect>
@@ -288,7 +275,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>102</x>
-     <y>561</y>
+     <y>486</y>
      <width>170</width>
      <height>21</height>
     </rect>
@@ -310,7 +297,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>18</x>
-     <y>532</y>
+     <y>457</y>
      <width>341</width>
      <height>16</height>
     </rect>
@@ -352,7 +339,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>197</x>
-     <y>460</y>
+     <y>393</y>
      <width>81</width>
      <height>16</height>
     </rect>
@@ -365,7 +352,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>481</y>
+     <y>414</y>
      <width>161</width>
      <height>30</height>
     </rect>
@@ -495,7 +482,7 @@ p, li { white-space: pre-wrap; }
    <property name="geometry">
     <rect>
      <x>12</x>
-     <y>399</y>
+     <y>332</y>
      <width>141</width>
      <height>16</height>
     </rect>
@@ -504,11 +491,11 @@ p, li { white-space: pre-wrap; }
     <string>4. Video URL</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="video_url_txt_edit">
+  <widget class="QTextEdit" name="vurl_txt_edit">
    <property name="geometry">
     <rect>
      <x>15</x>
-     <y>420</y>
+     <y>353</y>
      <width>351</width>
      <height>30</height>
     </rect>
@@ -519,6 +506,64 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;None&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_14">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>520</y>
+     <width>31</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>URL:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="url_label">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>513</y>
+     <width>310</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_15">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>560</y>
+     <width>41</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>VURL:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="vurl_label">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>550</y>
+     <width>310</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

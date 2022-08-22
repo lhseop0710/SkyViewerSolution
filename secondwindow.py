@@ -53,8 +53,18 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
             self.Delete_btn.setEnabled(True)
 
     def adjust_labeling_information(self):
+        #클래스와 인덱싱 넘버를 적용
         self.second_text_item = self.item_label.text()
         self.second_text_index = self.index_label.text()
+        #url 주소를 적용
+        url = self.url_txt_edit.toPlainText()
+        self.url_label.setText(url)
+        self.second_text_url = self.url_label.text()
+        #vurl 주소를 적용
+        vurl = self.vurl_txt_edit.toPlainText()
+        self.vurl_label.setText(vurl)
+        self.second_text_vurl = self.vurl_label.text()
+
 
 
     def close(self):

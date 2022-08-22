@@ -11,9 +11,9 @@ from PyQt5.QtCore import QObject, Qt
 import re
 from secondwindow import secondwindow
 import json
-import beep
-import shutil
-from collections import OrderedDict
+# import beep
+# import shutil
+# from collections import OrderedDict
 
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
 
@@ -214,19 +214,27 @@ class WindowClass(QMainWindow, form_class) :
         # image_name =
         selected_object = self.second.second_text_item
         object_number = self.second.second_text_index
+        web_url = self.second.second_text_url
+        web_vurl = self.second.second_text_vurl
         production = "skyviewersolution"
 
         # json파일에 정보를 넣어준다.
-        file_data = OrderedDict()
-        file_data["version"] = "1.0.0"
-        file_data["filename"] = "%s" % file_list[i]
-        file_data["shapes"] = {'label': '%s' % selected_object,
-                               'production_company': "%s" % production,
-                               'point_x': [clicked_points[0][0]],
-                               'point_y': [clicked_points[0][1]],
-                               'point_z': [clicked_points[0][2]],
-                               }
-        file_data["number"] = "%s" % object_number
+        # file_data = OrderedDict()
+        file_data = {}
+        file_data['point'] = []
+        file_data['version'] = "1.0.0"
+        file_data['filename'] = "%s" % file_list[i]
+        file_data['production_company'] = "%s" %production
+        file_data["point"].append({
+            "item": selected_object,            #오브젝트
+            "index": object_number,             #인덱싱넘버
+            "url": web_url,                     #웹페이지 주소
+            "vurl":web_vurl,                    #유투브 소스
+            "point_x": clicked_points[0][0],    #x좌표
+            "point_y": clicked_points[0][1],    #y좌표
+            "point_z": clicked_points[0][2]     #z좌표
+        })
+
 
         print(json.dumps(file_data, ensure_ascii=False, indent="\t"))
 
