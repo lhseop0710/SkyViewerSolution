@@ -4,13 +4,15 @@ import os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
-from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
+from PyQt5 import QtCore, QtWebEngineWidgets
 from PyQt5.QtWebEngineWidgets import QWebEnginePage
 from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtCore import QObject, Qt
 import re
 from secondwindow import secondwindow
 import json
+from PIL import Image
+from PIL.ExifTags import TAGS
 # import beep
 # import shutil
 # from collections import OrderedDict
@@ -38,12 +40,12 @@ class WindowClass(QMainWindow, form_class) :
     count_load_image = 0
     count_save_image = 0
     image_directory_path = "/Users/leehoseop/PycharmProjects/pano_dataset/sejong_gumgang_bridge/"
-    file_name = "DJI_"
-    ext = ".JPG"
+    exts = ('.jpg', 'png', '.JPG', '.PNG', 'jpeg', 'JPEG')
+    background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/icon.png"
+    url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/2copy.html')
     images_path = []
-    background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/SVS_background2.png"
     widget_List = []
-    url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/2.html')
+    # file_name = []
 
 
 
@@ -58,6 +60,7 @@ class WindowClass(QMainWindow, form_class) :
         self.setWindowTitle("Sky Viewer Solution Data Creator" + " Vesion Beta")
         self.setWindowIcon(QIcon("/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/icon.png"))
         self.image_Label.setStyleSheet("background-image : url(%s)" %self.background_picture)
+        self.image_Label.setScaledContents(True)
         self.image_Label.setAutoFillBackground(True)
 
         # Set up backend communication via web channel
@@ -83,24 +86,70 @@ class WindowClass(QMainWindow, form_class) :
         # self.pushbutton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.btn_Delete_List.clicked.connect(self.Clear_File_List)
         self.listWidget.itemSelectionChanged.connect(self.File_list_itemSelectionChange)
-        self.btn_svs.clicked.connect(self.loadImageFromFile)
-        self.btn_Next.clicked.connect(self.NextImageFromFile)
-        self.btn_Previous.clicked.connect(self.PreviousImageFromFile)
+        self.btn_adjust.clicked.connect(self.adjustimagedata)
+        self.btn_Next.clicked.connect(self.upImageFromFile)
+        self.btn_Previous.clicked.connect(self.downImageFromFile)
         self.btn_Image_Data_Generator.clicked.connect(self.Image_Labling)
         self.save_btn.clicked.connect(self.save_json_file)
         self.listWidget.itemClicked.connect(self.Clicked_list_item)
 
+    def gps_data(self):
+        global item
+        filename = str(self.images_path[0]) + "/" + item.text()
+        extension = filename.split('.')[-1]
+        if (extension == 'jpg') | (extension == 'JPG') | (extension == 'jpeg') | (extension == 'JPEG'):
+            try:
+                img = Image.open(filename)
+                info = img._getexif()
+                exif = {}
+                for tag, value in info.items():
+                    decoded = TAGS.get(tag, tag)
+                    exif[decoded] = value
+                # from the exif data, extract gps
+                exifGPS = exif['GPSInfo']
+                latData = exifGPS[2]
+                lonData = exifGPS[4]
+                # calculae the lat / long
+                latDeg = latData[0][0] / float(latData[0][1])
+                latMin = latData[1][0] / float(latData[1][1])
+                latSec = latData[2][0] / float(latData[2][1])
+                lonDeg = lonData[0][0] / float(lonData[0][1])
+                lonMin = lonData[1][0] / float(lonData[1][1])
+                lonSec = lonData[2][0] / float(lonData[2][1])
+                # correct the lat/lon based on N/E/W/S
+                Lat = (latDeg + (latMin + latSec / 60.0) / 60.0)
+                if exifGPS[1] == 'S': Lat = Lat * -1
+                Lon = (lonDeg + (lonMin + lonSec / 60.0) / 60.0)
+                if exifGPS[3] == 'W': Lon = Lon * -1
+                # print file
+                msg = "There is GPS info in this picture located at " + str(Lat) + "," + str(Lon)
+                print(msg)
+                # kmlheader = '<?xml version="1.0" encoding="UTF-8"?>' + '<kml xmlns="http://www.opengis.net/kml/2.2">'
+                # kml = (
+                #           '<Placemark><name>%s</name><Point><coordinates>%6f,%6f</coordinates></Point></Placemark></kml>') % (
+                #           filename, Lon, Lat)
+                # with open(filename + '.kml', "w") as f:
+                #     f.write(kmlheader + kml)
+                # print
+                # 'kml file created'
+            except:
+                print
+                'There is no GPS info in this picture'
+                pass
+
+
     def File_Dialog(self):
-        exts = ('.jpg', 'png', '.JPG', '.PNG')
+        global images_path
 
         images_path = QFileDialog.getExistingDirectory(self, 'Open File')
         self.images_path.append(images_path)
         file_list = os.listdir(images_path)
         print(images_path)
-        file_list_py = [file for file in file_list if file.endswith(exts)]  ## 파일명 끝이 .jpg인 경우
+        file_list_py = [file for file in file_list if file.endswith(self.exts)]  ## 파일명 끝이 .jpg인 경우
 
         for file in sorted(file_list_py):
             self.listWidget.addItem(file)
+            self.listWidget.setCurrentRow(0)    #default 값으로 인덱싱 넘버 0 번의 아이템을 클릭하도록 함
 
     def Clear_File_List(self):
         self.listWidget.clear()         #파일리스트 삭제
@@ -113,19 +162,73 @@ class WindowClass(QMainWindow, form_class) :
 
 
     def File_list_itemSelectionChange(self):
+        global item
+        global exifGPS
+        global path
         item = self.listWidget.currentItem()
         path = self.images_path
         if (item == None):
             self.file_name_label.setText("Undifined")
         else:
-            self.file_name_label.setText(item.text())
-            self.file_path_label.setText(str(path[0]) + "/" + item.text())
+            self.file_name_label.setText(item.text())           #현재 행의 파일 명
+            self.file_path_label.setText(str(path[0]) + "/" + item.text()) #현재 행의 경로와 파일 명
 
-    def loadImageFromFile(self) :
+    def adjustimagedata(self) :  #수정한 데이터를 적용하여 라벨에 표시함
+        global exifGPS
+        global resolution
+        global latlong
+        # gps 정보 추출
+        filename = str(path[0]) + "/" + item.text()
+        print('this: ' + filename)
+        # extension = filename.split('.')[-1]
+        img = Image.open(filename)
+        info = img._getexif()   #getexif()를 사용하면 GPSInfo가 int타입으로 잘못출력됨 '_getexif()'를 사용
+        exif = {}
+
+        for tag, value in info.items():
+            decoded = TAGS.get(tag, tag)
+            exif[decoded] = value
+    # from the exif data, extract gps
+        print(exif)
+        print(exif['GPSInfo'])
+    # print(filename)
+        exifGPS = exif['GPSInfo']
+        ImageWidth= exif['ImageWidth']
+        ImageLength= exif['ImageLength']
+        # ImageWidth = exifIW[]
+
+    #네이버,카카오는 십진수를 주로 사용하고 구글은 전부 사용함
+    #십진수 도(DD): 41.40338, 2.17403
+    #도, 분, 초(DMS): 41°24'12.2"N 2°10'26.5"E
+    #도 및 십진수 분(DMM): 41 24.2028, 2 10.4418
+    # calculae the lat / long
+    #경도
+        latdegrees = float(exifGPS[2][0]) #/  float(exifGPS[2][1])  #도
+        latminutes = float(exifGPS[2][1]) #/  float(exifGPS[2][1])   #분
+        latseconds = float(exifGPS[2][2]) #/  float(exifGPS[2][1])   #초
+    #위도
+        londegrees = float(exifGPS[4][0]) #/  float(exifGPS[4][1])   #도
+        lonminutes = float(exifGPS[4][1]) #/  float(exifGPS[4][1])   #분
+        lonseconds = float(exifGPS[4][2]) #/  float(exifGPS[4][1])   #초
+        #십진수로 교정 카카오나 네이버에서 사용하기 쉽도록 변형해준다.
+        Lat = (latdegrees + (latminutes + latseconds / 60.0) / 60.0)
+        Lon = (londegrees + (lonminutes + lonseconds / 60.0) / 60.0)
+
+        resolution = str(ImageWidth) +','+ str(ImageLength)
+        latlong = str(Lat) + "," + str(Lon)
+
+
+        self.resolution_label.setText(resolution)
+        self.lat_label.setText('%s' % Lat)  #십진수(DD)로 변환한 위도
+        self.long_label.setText('%s' % Lon) #십진수(DD)로 변환한 경도
+
+        #파노라마 이미지의 좌표값을 라벨에 적용
         clicked_points = WebEnginePage.point
         self.point_x_label.setText(clicked_points[0][0])
         self.point_y_label.setText(clicked_points[0][1])
         self.point_z_label.setText(clicked_points[0][2])
+
+        #이미지가 촬영된 GPS 위도, 경도값을 라벨에 적용
 
     #클릭한 아이템을 라벨에 보여주도록 함
     def Clicked_list_item(self, item):
@@ -134,37 +237,39 @@ class WindowClass(QMainWindow, form_class) :
         self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
         self.image_Label.setPixmap(self.qPixmapFileVar)
 
-    def NextImageFromFile(self) :
-        item = self.listWidget.currentItem() #파일 이름
-        value = self.listWidget.count() #리스트내 파일_전체 계수
+    def upImageFromFile(self) : #up
         row = self.listWidget.currentRow() #현재 행
-        self.row += row
-        print(value)
-        print(row)
-        if self.row < value:
+        item = self.listWidget.item(row) #파일 이름
+        value = self.listWidget.count() #리스트내 파일_전체 개수
+        if row < value:
             self.listWidget.setCurrentRow(row+1)
             self.qPixmapFileVar = QPixmap()
             self.qPixmapFileVar.load(str(self.images_path[0]) + "/" + str(item.text()))
             self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
             self.image_Label.setPixmap(self.qPixmapFileVar)
-        else :
-            self.listWidget.setCurrentRow(0)
-
-    def PreviousImageFromFile(self) :
-        item = self.listWidget.currentItem()
-        value = self.listWidget.count()
-        row = self.listWidget.currentRow() #현재 행
-        self.row -= row
+            row -= 1
+        if row > value:
+            row = self.listWidget.setCurrentRow(0)
+            return row
         print(value)
         print(row)
+
+    def downImageFromFile(self) :  #down
+        row = self.listWidget.currentRow() #현재 행
+        item = self.listWidget.item(row)
+        value = self.listWidget.count()
         if row < value:
             self.listWidget.setCurrentRow(row-1)
             self.qPixmapFileVar = QPixmap()
             self.qPixmapFileVar.load(str(self.images_path[0]) + "/" + str(item.text()))
             self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1200)
             self.image_Label.setPixmap(self.qPixmapFileVar)
-        else :
-            self.listWidget.setCurrentRow(0)
+            row += 1
+        if row > value:
+            row = self.listWidget.setCurrentRow(value)
+            return row
+        print(value)
+        print(row)
 
     def dragEnterEvent(self, event):            #드래그 앤 드랍을 구현
             if event.mimeData().hasUrls():
@@ -178,27 +283,29 @@ class WindowClass(QMainWindow, form_class) :
                 print(f)
 
     def Image_Labling(self):            #파일의 경로를 받아올 수 있도록 함
-        global i
-        global imag_path_dir
-        global file_list
-        imag_path_dir = QFileDialog.getExistingDirectory(self, 'Open File')
-        file_list = os.listdir(imag_path_dir)
-        file_list.sort()
-
-        if not file_list:
-            print("img_load_fail")
-            sys.exit()
-
-        i = 1
-        while i < len(file_list):
-            img_name = imag_path_dir + '/' + file_list[i]
-            print(file_list[i])
-            print(img_name)
-            if i > len(file_list):
-                msg = QMessageBox()
-                msg.setWindowTitle('Message')
-                msg.setText("No more Images, Press OK")
-                break
+        # global images_path
+        # global i
+        # global imag_path_dir
+        # global file_list
+        #
+        # images_path = QFileDialog.getExistingDirectory(self, 'Open File')
+        # file_list = os.listdir(images_path)
+        # file_list.sort()
+        #
+        # if not file_list:
+        #     print("img_load_fail")
+        #     sys.exit()
+        #
+        # i = 1
+        # while i < len(file_list):
+        #     img_name = images_path + '/' + file_list[i]
+        #     print(file_list[i])
+        #     print(img_name)
+        #     if i > len(file_list):
+        #         msg = QMessageBox()
+        #         msg.setWindowTitle('Message')
+        #         msg.setText("No more Images, Press OK")
+        #         break
 
             self.second = secondwindow()    #두번째창 생성
             self.second.exec()          #두번째창 닫을때까지 기다림
@@ -206,9 +313,8 @@ class WindowClass(QMainWindow, form_class) :
 
 
     def save_json_file(self):
-        global i
-        global imag_path_dir
-        global file_list
+        global images_path
+        global item #파일명
 
         clicked_points = WebEnginePage.point
         # image_name =
@@ -221,11 +327,13 @@ class WindowClass(QMainWindow, form_class) :
         # json파일에 정보를 넣어준다.
         # file_data = OrderedDict()
         file_data = {}
-        file_data['point'] = []
         file_data['version'] = "1.0.0"
-        file_data['filename'] = "%s" % file_list[i]
+        file_data['filename'] = "%s" %item.text()
         file_data['production_company'] = "%s" %production
-        file_data["point"].append({
+        file_data['Latitude,Longitude'] = "%s" %latlong
+        file_data['resolution'] = "%s" %resolution
+        file_data['info_point'] = []
+        file_data["info_point"].append({
             "item": selected_object,            #오브젝트
             "index": object_number,             #인덱싱넘버
             "url": web_url,                     #웹페이지 주소
@@ -236,12 +344,11 @@ class WindowClass(QMainWindow, form_class) :
         })
 
 
-        print(json.dumps(file_data, ensure_ascii=False, indent="\t"))
+        print(json.dumps(file_data, ensure_ascii=False, indent=4))  #"\t"
 
-        with open(imag_path_dir + file_list[i] + '.json', 'w', encoding="utf-8") as make_file:
-            json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
+        with open(images_path + '/' + item.text() + '.json', 'w', encoding="utf-8") as make_file:
+            json.dump(file_data, make_file, ensure_ascii=False, indent="\t", sort_keys = True)
         # shutil.copy(img_name, Labeled_data_path)
-        i += 1
         #
         # def home(self):
         #     self.show()             #두번째창 닫으면 다시 첫 번째 창 보여 짐

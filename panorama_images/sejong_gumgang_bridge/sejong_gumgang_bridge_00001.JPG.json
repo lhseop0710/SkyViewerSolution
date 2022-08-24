@@ -1,0 +1,18 @@
+{
+	"Latitude,Longitude": "36.485841694444446,127.28412791666666",
+	"filename": "sejong_gumgang_bridge_00001.JPG",
+	"info_point": [
+		{
+			"index": "5",
+			"item": "toilet",
+			"point_x": "1069.3809985990065",
+			"point_y": "697.2364110865511",
+			"point_z": "-5000",
+			"url": "None",
+			"vurl": "None"
+		}
+	],
+	"production_company": "skyviewersolution",
+	"resolution": "8192,4096",
+	"version": "1.0.0"
+}
