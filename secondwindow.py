@@ -64,6 +64,14 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
         vurl = self.vurl_txt_edit.toPlainText()
         self.vurl_label.setText(vurl)
         self.second_text_vurl = self.vurl_label.text()
+        #이름을 적용 (건물, 상호, 공공기관 등)
+        name = self.name_txt_edit.toPlainText()
+        self.name_label.setText(name)
+        self.second_text_name = self.name_label.text()
+        #도시,지방 이름을 적용(특별시,광역시 시 단위로 작성)
+        city = self.city_txt_edit.toPlainText()
+        self.city_label.setText(city)
+        self.second_txt_city = self.city_label.text()
 
 
 

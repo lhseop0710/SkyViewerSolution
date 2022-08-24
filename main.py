@@ -165,23 +165,30 @@ class WindowClass(QMainWindow, form_class) :
         global item
         global exifGPS
         global path
+        global file_name_item
+        global file_path_item
         item = self.listWidget.currentItem()
         path = self.images_path
+        file_name_item = item.text()
+        file_path_item = str(path[0]) + "/" + item.text()
         if (item == None):
             self.file_name_label.setText("Undifined")
         else:
-            self.file_name_label.setText(item.text())           #현재 행의 파일 명
-            self.file_path_label.setText(str(path[0]) + "/" + item.text()) #현재 행의 경로와 파일 명
+            self.file_name_label.setText(file_name_item)           #현재 행의 파일 명
+            self.file_path_label.setText(file_path_item) #현재 행의 경로와 파일 명
 
     def adjustimagedata(self) :  #수정한 데이터를 적용하여 라벨에 표시함
+        # global item
         global exifGPS
         global resolution
         global latlong
+        global file_name_item
+        global file_path_item
         # gps 정보 추출
-        filename = str(path[0]) + "/" + item.text()
-        print('this: ' + filename)
+        # filename = str(path[0]) + "/" + item
+        # print('this: ' + filename)
         # extension = filename.split('.')[-1]
-        img = Image.open(filename)
+        img = Image.open(file_path_item)
         info = img._getexif()   #getexif()를 사용하면 GPSInfo가 int타입으로 잘못출력됨 '_getexif()'를 사용
         exif = {}
 
@@ -283,41 +290,38 @@ class WindowClass(QMainWindow, form_class) :
                 print(f)
 
     def Image_Labling(self):            #파일의 경로를 받아올 수 있도록 함
-        # global images_path
-        # global i
-        # global imag_path_dir
-        # global file_list
-        #
-        # images_path = QFileDialog.getExistingDirectory(self, 'Open File')
-        # file_list = os.listdir(images_path)
-        # file_list.sort()
-        #
-        # if not file_list:
-        #     print("img_load_fail")
-        #     sys.exit()
-        #
-        # i = 1
-        # while i < len(file_list):
-        #     img_name = images_path + '/' + file_list[i]
-        #     print(file_list[i])
-        #     print(img_name)
-        #     if i > len(file_list):
-        #         msg = QMessageBox()
-        #         msg.setWindowTitle('Message')
-        #         msg.setText("No more Images, Press OK")
-        #         break
-
             self.second = secondwindow()    #두번째창 생성
             self.second.exec()          #두번째창 닫을때까지 기다림
             # self.show()  # 두번쨰창 닫으면 다시 메인윈도우
 
+    def findTextCountInText(fname, word):
+        cOunt = 0
+        with open(fname, 'r') as f:
+            for line in f:
+                if word in line:
+                    cOunt = cOunt + 1
+        return cOunt
 
     def save_json_file(self):
         global images_path
         global item #파일명
+        global file_name_item
+        global file_path_item
 
+        ext = "_json"
+        json_path = images_path+ext
+        if not os.path.exists(json_path):
+            try:
+                os.makedirs(json_path)
+            except:
+                print("already_exist")
+
+
+        item = file_name_item
+        file_name = item.split('.')[0]
         clicked_points = WebEnginePage.point
-        # image_name =
+        name = self.second.second_text_name
+        city = self.second.second_txt_city
         selected_object = self.second.second_text_item
         object_number = self.second.second_text_index
         web_url = self.second.second_text_url
@@ -327,31 +331,56 @@ class WindowClass(QMainWindow, form_class) :
         # json파일에 정보를 넣어준다.
         # file_data = OrderedDict()
         file_data = {}
-        file_data['version'] = "1.0.0"
-        file_data['filename'] = "%s" %item.text()
-        file_data['production_company'] = "%s" %production
+        file_data['Version'] = "1.0.0"
+        file_data['Production_company'] = "%s" %production
+        file_data['Filename'] = "%s" %item
+        file_data['City'] = "%s" %city
         file_data['Latitude,Longitude'] = "%s" %latlong
-        file_data['resolution'] = "%s" %resolution
-        file_data['info_point'] = []
-        file_data["info_point"].append({
-            "item": selected_object,            #오브젝트
-            "index": object_number,             #인덱싱넘버
-            "url": web_url,                     #웹페이지 주소
-            "vurl":web_vurl,                    #유투브 소스
-            "point_x": clicked_points[0][0],    #x좌표
-            "point_y": clicked_points[0][1],    #y좌표
-            "point_z": clicked_points[0][2]     #z좌표
+        file_data['Resolution'] = "%s" %resolution
+        file_data['Info_point'] = []
+        file_data['Info_point'].append({
+            "Number": 0,
+            "Name": name,
+            "Item": selected_object,            #오브젝트
+            "Index": object_number,             #인덱싱넘버
+            "Url": web_url,                     #웹페이지 주소
+            "Vurl":web_vurl,                    #유투브 소스
+            "Point_x": clicked_points[0][0],    #x좌표
+            "Point_y": clicked_points[0][1],    #y좌표
+            "Point_z": clicked_points[0][2]     #z좌표
         })
 
+        Img_json_file = json_path + '/' + file_name + '.json'
 
-        print(json.dumps(file_data, ensure_ascii=False, indent=4))  #"\t"
+        if not os.path.exists(Img_json_file):
+            print(json.dumps(file_data, ensure_ascii=False, indent="\t"))  # "\t"
+            with open(Img_json_file, 'w', encoding="utf-8") as make_file:
+                json.dump(file_data, make_file, ensure_ascii=False, indent="\t")
+        else:
+            print("already_exist")
+            # file_data= {}
+            with open(Img_json_file, "r") as json_file:
+                file_data = json.load(json_file)
 
-        with open(images_path + '/' + item.text() + '.json', 'w', encoding="utf-8") as make_file:
-            json.dump(file_data, make_file, ensure_ascii=False, indent="\t", sort_keys = True)
-        # shutil.copy(img_name, Labeled_data_path)
-        #
-        # def home(self):
-        #     self.show()             #두번째창 닫으면 다시 첫 번째 창 보여 짐
+            txt = "Number"
+            Number = WindowClass.findTextCountInText(Img_json_file, txt)
+            Number += 1
+
+            file_data['Info_point'].append({
+                "Number": '%s' %str(Number),
+                "Name": name,
+                "Item": selected_object,  # 오브젝트
+                "Index": object_number,  # 인덱싱넘버
+                "Url": web_url,  # 웹페이지 주소
+                "Vurl": web_vurl,  # 유투브 소스
+                "Point_x": clicked_points[0][0],  # x좌표
+                "Point_y": clicked_points[0][1],  # y좌표
+                "Point_z": clicked_points[0][2]  # z좌표
+            })
+            print(json.dumps(file_data, ensure_ascii=False, indent="\t"))  # "\t"
+
+            with open(Img_json_file, 'w') as make_file:
+                json.dump(file_data, make_file, indent="\t")
 
 
 

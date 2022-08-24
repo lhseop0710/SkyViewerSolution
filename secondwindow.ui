@@ -251,10 +251,10 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="text">
-    <string>4. Latitude</string>
+    <string>5. Name</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="latitude_txt_edit">
+  <widget class="QTextEdit" name="name_txt_edit">
    <property name="geometry">
     <rect>
      <x>15</x>
@@ -319,7 +319,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="text">
-    <string>class :</string>
+    <string>Class :</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_7">
@@ -332,7 +332,7 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="text">
-    <string>index :</string>
+    <string>Index :</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_8">
@@ -345,10 +345,10 @@ p, li { white-space: pre-wrap; }
     </rect>
    </property>
    <property name="text">
-    <string>5. Longitude</string>
+    <string>6. City</string>
    </property>
   </widget>
-  <widget class="QTextEdit" name="longitude_txt_edit">
+  <widget class="QTextEdit" name="city_txt_edit">
    <property name="geometry">
     <rect>
      <x>200</x>
@@ -396,87 +396,6 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QWidget" name="verticalLayoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>202</x>
-     <y>591</y>
-     <width>160</width>
-     <height>100</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
-     <widget class="QLabel" name="point_x_label">
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="point_y_label">
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLabel" name="point_z_label">
-      <property name="frameShape">
-       <enum>QFrame::Box</enum>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QLabel" name="label_9">
-   <property name="geometry">
-    <rect>
-     <x>181</x>
-     <y>596</y>
-     <width>20</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>x :</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_10">
-   <property name="geometry">
-    <rect>
-     <x>181</x>
-     <y>630</y>
-     <width>20</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>y :</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_11">
-   <property name="geometry">
-    <rect>
-     <x>181</x>
-     <y>666</y>
-     <width>20</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>z :</string>
-   </property>
   </widget>
   <widget class="QLabel" name="label_12">
    <property name="geometry">
@@ -564,6 +483,64 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_9">
+   <property name="geometry">
+    <rect>
+     <x>186</x>
+     <y>609</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Name :</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>228</x>
+     <y>601</y>
+     <width>121</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLabel" name="name_label">
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="city_label">
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label_10">
+   <property name="geometry">
+    <rect>
+     <x>187</x>
+     <y>651</y>
+     <width>40</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>City :</string>
    </property>
   </widget>
  </widget>
