@@ -472,7 +472,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>point_y:</string>
+     <string>point_z:</string>
     </property>
    </widget>
    <widget class="QLabel" name="point_z_label">

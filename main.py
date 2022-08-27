@@ -339,7 +339,7 @@ class WindowClass(QMainWindow, form_class) :
         file_data['Resolution'] = "%s" %resolution
         file_data['Info_point'] = []
         file_data['Info_point'].append({
-            "Number": 0,
+            "Number": "1" ,
             "Name": name,
             "Item": selected_object,            #오브젝트
             "Index": object_number,             #인덱싱넘버
