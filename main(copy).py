@@ -4,7 +4,7 @@ import os
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
-from PyQt5 import QtCore, QtWidgets, QtWebEngineWidgets
+from PyQt5 import QtCore, QtWebEngineWidgets
 from PyQt5.QtWebEngineWidgets import QWebEnginePage
 from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtCore import QObject, Qt
@@ -15,7 +15,6 @@ import cv2
 import beep
 import shutil
 from collections import OrderedDict
-import utils
 
 form_class = uic.loadUiType("SVS_Viewer.ui")[0]
 
