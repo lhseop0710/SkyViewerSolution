@@ -1,0 +1,34 @@
+
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+                    <title>Panolens.js panorama image panorama</title>
+                    <link href="css/stayle.css" rel="stylesheet" type="text/css">
+                </head>
+                <body>
+                    <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
+                    <script src="three.min.js"></script>
+                    <script src="panolens.min.js"></script>
+                    <script>
+                    var panorama1
+                    var viewerr
+        			panorama1 = new PANOLENS.ImagePanorama('./panorama_images/sejong_gumgang_bridge/sejong_gumgang_bridge_00018.JPG');
+
+                    viewer = new PANOLENS.Viewer({
+                        container: document.body,        // A DOM Element container
+                        output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
+                    });
+
+                    panorama1.addEventListener("click", function(e){
+                        if (e.intersects.length > 0) return;
+                        const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+                        console.log(JSON.stringify(a));
+                    });
+
+                    viewer.add( panorama1 );
+                    </script>
+                </body>
+            </html>
+        

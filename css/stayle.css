@@ -1,0 +1,112 @@
+      html, body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #000;
+      }
+
+      a:link, a:visited{
+        color: #bdc3c7;
+      }
+
+      .credit{
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        padding: 20px 0;
+        color: #fff;
+      }
+
+      #desc-container {
+        max-width: 500px;
+        max-height: 500px;
+        min-width: 200px;
+        min-height: 250px;
+        background: #fff;
+        color: #000;
+        border-radius: 3px;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #desc-container > iframe {
+        border: none;
+        width:100%;
+      }
+
+      .title {
+        font-size: 1.5em;
+        text-align: center;
+        padding: 5px;
+      }
+
+      .text {
+        padding: 0 20px 20px 20px;
+      }
+      
+      .container {
+        width: 100%;
+        height: 100%;
+      }
+
+      .container .left {
+        float: left;
+        width: 20%;
+        height: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
+        background-color: #fff;
+      }
+
+      .container .right {
+        float: left;
+        width: 80%;
+        height: 100%;
+        box-sizing: border-box;
+        background-color: #000;
+      }
+
+      .mdl-list {
+        padding: 0;
+        margin: 0;
+      }
+
+      .mdl-list__item {
+        padding: 0;
+      }
+
+      .mdl-button {
+        min-height: 64px;
+        width: 100%;
+      }
+
+      .template {
+        display: none;
+      }
+
+      .mdl-layout__header {
+        min-height: 80px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+      }
+
+      @media screen and (max-width: 800px) {
+        .container .left {
+          display: none;
+        }
+        .container .right {
+          width: 100%;
+        }
+      }
+    

@@ -106,6 +106,16 @@ p, li { white-space: pre-wrap; }
      <string>store</string>
     </property>
    </item>
+   <item>
+    <property name="text">
+     <string>parking_zone</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>etc</string>
+    </property>
+   </item>
   </widget>
   <widget class="QPushButton" name="Add_btn">
    <property name="geometry">
