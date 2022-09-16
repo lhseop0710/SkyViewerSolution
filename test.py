@@ -42,7 +42,7 @@ class WindowClass(QMainWindow, form_class) :
     image_directory_path = "/Users/leehoseop/PycharmProjects/pano_dataset/sejong_gumgang_bridge/"
     exts = ('.jpg', 'png', '.JPG', '.PNG', 'jpeg', 'JPEG')
     background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/icon.png"
-    url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/index.html')
+    url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/index.html')  #html을 넣고 구동시키는 형태
     images_path = []
     widget_List = []
     # file_name = []
@@ -83,6 +83,7 @@ class WindowClass(QMainWindow, form_class) :
         self.webview_layout.addWidget(self.webview)
 
         self.btn_loadFromFile.clicked.connect(self.File_Dialog)
+        self.get_html_btn.clicked.connect(self.get_html)
         # self.pushbutton.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.btn_Delete_List.clicked.connect(self.Clear_File_List)
         self.listWidget.itemSelectionChanged.connect(self.File_list_itemSelectionChange)
@@ -92,6 +93,67 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_Image_Data_Generator.clicked.connect(self.Image_Labling)
         self.save_btn.clicked.connect(self.save_json_file)
         self.listWidget.itemClicked.connect(self.Clicked_list_item)
+
+
+    def get_html(self):
+        print("make html")
+        global images_path
+        global file_path_item
+
+        relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
+        ext = "_html"
+        html_path = images_path + ext
+        if not os.path.exists(html_path):
+            try:
+                os.makedirs(html_path)
+            except:
+                print("already_exist")
+
+        # Html파일에 정보를 넣어준다.
+
+        html_text1 = """
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+                    <title>Panolens.js panorama image panorama</title>
+                    <link href="css/stayle.css" rel="stylesheet" type="text/css">
+                </head>
+                <body>
+                    <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
+                    <script src="three.min.js"></script>
+                    <script src="panolens.min.js"></script>
+                    <script>
+                    var panorama1
+                    var viewerr
+        """
+        html_img = "\t\t\t" +  "panorama1 = new PANOLENS.ImagePanorama(""'./" + relpath + "'"");" "\n"
+
+        html_text2 = """
+                    viewer = new PANOLENS.Viewer({
+                        container: document.body,        // A DOM Element container
+                        output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
+                    });
+                    panorama1.addEventListener("click", function(e){
+                        if (e.intersects.length > 0) return;
+                        const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+                        console.log(JSON.stringify(a));
+                    });
+                    viewer.add( panorama1 );
+                    </script>
+                </body>
+            </html>
+        """
+        html_text = html_text1 + html_img + html_text2
+
+        with open('html_file.html', 'w') as html_file:
+            html_file.write(html_text)
+
+        self.url = QtCore.QUrl().fromLocalFile(
+            os.path.split(os.path.abspath(__file__))[0] + r'/html_file.html')  # html을 넣고 구동시키는 형태
+        self.webview.load(self.url)
+
 
     def gps_data(self):
         global item
@@ -175,7 +237,7 @@ class WindowClass(QMainWindow, form_class) :
             self.file_name_label.setText("Undifined")
         else:
             self.file_name_label.setText(file_name_item)           #현재 행의 파일 명
-            self.file_path_label.setText(file_path_item) #현재 행의 경로와 파일 명
+            self.file_path_label.setText(file_path_item)           #현재 행의 경로와 파일 명
 
     def adjustimagedata(self) :  #수정한 데이터를 적용하여 라벨에 표시함
         # global item
@@ -382,36 +444,6 @@ class WindowClass(QMainWindow, form_class) :
             with open(Img_json_file, 'w') as make_file:
                 json.dump(file_data, make_file, indent="\t")
 
-
-
-    # def Clicked_list_item(self, current):
-    #     currentItem = self.listWidget(current)
-    #     print(currentItem)
-    #     pixmap = currentItem.getPixmap()
-    #     imagePath = currentItem.getImagePath()
-    #     lblTxt = currentItem.getText()
-    #
-    #     self.qPixmapFileVar = QPixmap()
-    #     self.qPixmapFileVar.load(self.images_path + currentItem)
-    #     self.qPixmapFileVar = self.qPixmapFileVar.scaledToWidth(1500)
-    #     self.image_Label.setPixmap(self.qPixmapFileVar)
-
-    # def loadImageFromWeb(self) :
-    #
-    #     #Web에서 Image 정보 로드
-    #     urlString = "https://avatars1.githubusercontent.com/u/44885477?s=460&v=4"
-    #     imageFromWeb = urllib.request.urlopen(urlString).read()
-    #
-    #     #웹에서 Load한 Image를 이용하여 QPixmap에 사진데이터를 Load하고, Label을 이용하여 화면에 표시
-    #     self.qPixmapWebVar = QPixmap()
-    #     self.qPixmapWebVar.loadFromData(imageFromWeb)
-    #     self.qPixmapWebVar = self.qPixmapWebVar.scaledToWidth(600)
-    #     self.lbl_picture.setPixmap(self.qPixmapWebVar)
-    #
-    # def saveImageFromWeb(self) :
-    #     #Label에서 표시하고 있는 사진 데이터를 QPixmap객체의 형태로 반환받은 후, save함수를 이용해 사진 저장
-    #     self.qPixmapSaveVar = self.lbl_picture.pixmap()
-    #     self.qPixmapSaveVar.save("SavedImage.jpg")
 
 if __name__ == "__main__" :
 

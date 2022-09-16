@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
+import time
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
@@ -99,6 +100,7 @@ class WindowClass(QMainWindow, form_class) :
         print("make html")
         global images_path
         global file_path_item
+        clicked_points = WebEnginePage.point
 
         relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
         ext = "_html"
@@ -125,36 +127,99 @@ class WindowClass(QMainWindow, form_class) :
                     <script src="three.min.js"></script>
                     <script src="panolens.min.js"></script>
                     <script>
-                    var panorama1
-                    var viewerr
+                        var panorama1;
+                        var infospot1, infospot2, viewer;
         """
-        html_img = "\t\t\t" +  "panorama1 = new PANOLENS.ImagePanorama(""'./" + relpath + "'"");" "\n"
+        html_Number = "\t\t\t\t" + "var Num_index = 0;"
+
+
+        html_img = "\n"\
+                   "\t\t\t\t\t\t" +  "panorama1 = new PANOLENS.ImagePanorama(""'./" + relpath + "'"");" "\n"
+
 
         html_text2 = """
-                    viewer = new PANOLENS.Viewer({
-                        container: document.body,        // A DOM Element container
-                        output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
-                    });
+                        viewer = new PANOLENS.Viewer({
+                            container: document.body,        // A DOM Element container
+                            controlBar: true,             // Vsibility of bottom control bar
+                            controlButtons: [],            // Buttons array in the control bar. Default to ['fullscreen', 'setting', 'video']
+                            autoHideControlBar: false,        // Auto hide control bar
+                            autoHideInfospot: false,            // Auto hide infospots
+                            horizontalView: false,            // Allow only horizontal camera control
+                            cameraFov: 60,                // Camera field of view in degree
+                            reverseDragging: false,            // Reverse orbit control direction
+                            enableReticle: false,            // Enable reticle for mouseless interaction
+                            dwellTime: 1500,            // Dwell time for reticle selection in millisecond
+                            autoReticleSelect: true,        // Auto select a clickable target after dwellTime
+                            viewIndicator: false,            // Adds an angle view indicator in upper left corner
+                            indicatorSize: 30,            // Size of View Indicator
+                            output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
+                          });
 
-                    panorama1.addEventListener("click", function(e){
-                        if (e.intersects.length > 0) return;
-                        const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
-                        console.log(JSON.stringify(a));
-                    });
-
-                    viewer.add( panorama1 );
+                        panorama1.addEventListener("click", function(e){
+                            if (e.intersects.length > 0) return;
+                            const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+                            console.log(JSON.stringify(a));
+                        });
+                        
+        """
+        html_viewer = """
+                        viewer.add( panorama1 );
                     </script>
                 </body>
             </html>
         """
-        html_text = html_text1 + html_img + html_text2
+        html_file_path = html_path + '/' + 'html_file.html'
+        html_text = html_text1 + html_Number + html_img + html_text2 + html_viewer
 
-        with open('html_file.html', 'w') as html_file:
-            html_file.write(html_text)
+        ######################
+        if not os.path.exists(html_file_path):
+            with open('html_file.html', 'w', encoding="utf-8") as html_file:
+                html_file.write(html_text)
+        else:
+            print("already_exist")
+            # file_data= {}
+            # with open(html_file_path, "r") as html_file:
+            #     html_file.read()
+
+            # html_var = []
+            # html_info_list = []
+            # info_num_list = []
+            txt = "Num_index"
+            Number = WindowClass.findTextCountInText(html_file_path, txt)
+            Number += 1
+
+            html_info = "\t\t\t\t" + "infospot" + str(Number) + " = new PANOLENS.Infospot();""\n" + \
+                        "\t\t\t\t\t\t""infospot" + str(Number) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
+                        "\t\t\t\t\t\t""infospot" + str(Number) + ".addHoverText('Infospot');""\n"+\
+                        "\t\t\t\t\t\t""infospot" + str(Number) + ".addEventListener( 'click', onfocus );" + "\n" + \
+                        "\t\t\t\t\t\t""panorama1.add( infospot" + str(Number) + " );"
+
+            #PANOLENS.DataImage.Info
+            # html_info_list.append(html_info)
+            #
+            # info_num_list.append("infospot"+Number)
+            # html_infospot_add = "\t\t\t" + "panorama1.add( infospot"+Number+");"
+
+
+            html_text = html_text1 + html_Number+ html_img + html_text2 + html_info + html_viewer
+
+
+            with open('html_file.html', 'w') as html_file:
+                html_file.write(html_text)
+                ##################
+
+        # html_text = html_text1 + html_img + html_text2
+        #
+        # with open('html_file.html', 'w') as html_file:
+        #     html_file.write(html_text)
+
+        #html_info = "\t\t\t" + "infospot"+Number+"= new PANOLENS.Infospot( PANOLENS.DataImage.Info);""\n"+"infospot"+Number+".position.set("+str(clicked_points[0][0]) + "," + str(clicked_points[0][1])+ "," + str(clicked_points[0][2])+" );""\n"+"infospot"+Number+".addHoverText( 'Infospot');""\n""infospot"+Number+".addEventListener( 'click', onFocus );"
+
 
         self.url = QtCore.QUrl().fromLocalFile(
             os.path.split(os.path.abspath(__file__))[0] + r'/html_file.html')  # html을 넣고 구동시키는 형태
         self.webview.load(self.url)
+
 
 
     def gps_data(self):
@@ -248,6 +313,7 @@ class WindowClass(QMainWindow, form_class) :
         global latlong
         global file_name_item
         global file_path_item
+        global clicked_point
         # gps 정보 추출
         # filename = str(path[0]) + "/" + item
         # print('this: ' + filename)

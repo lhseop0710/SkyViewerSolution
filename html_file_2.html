@@ -14,7 +14,7 @@
                     <script>
                         var panorama1;
                         var infospot1, infospot2, viewer;
-        				var Num_index = 0;
+        				int Number = 0
 						panorama1 = new PANOLENS.ImagePanorama('./panorama_images/sejong_gumgang_bridge/sejong_gumgang_bridge_00000.JPG');
 
                         viewer = new PANOLENS.Viewer({
@@ -40,11 +40,11 @@
                             console.log(JSON.stringify(a));
                         });
                         
-        				infospot1 = new PANOLENS.Infospot();
-						infospot1.position.set( 4999.999999999999, -3854.900290722571, 76.33598479975754 );
-						infospot1.addHoverText('Infospot');
-						infospot1.addEventListener( 'click', onfocus );
-						panorama1.add( infospot1 );
+        				infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( 4114.978082608978, -81.27295589352626, -5000 );
+						infospot2.addHoverText('Infospot');
+						infospot2.addEventListener( 'click', onfocus );
+						panorama1.add( infospot2 );
                         viewer.add( panorama1 );
                     </script>
                 </body>
