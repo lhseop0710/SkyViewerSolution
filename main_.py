@@ -46,9 +46,13 @@ class WindowClass(QMainWindow, form_class) :
     url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/index.html')  #html을 넣고 구동시키는 형태
     images_path = []
     widget_List = []
-    infospot_num = 1
-    info_list = []
-    infospot_index = ""
+    infospot_num = 1            #inforpot 인덱싱 넘버 부여
+    vinfospot_num = 1           #video-infospot 인덱싱 넘버 부여
+    info_list = []              #infospot 리스트로 추가적으로 반환받아 보관
+    vinfo_desc_list = []             #vinfospot 콘테이너를 리스트로 추가적으로 반환받아 보관
+    vinfo_list = []
+    infospot_index = ""         #infospot 내용 문자열 추가
+    vinfospot_index = ""        #vinfospot 내용 문자열 추가
     # file_name = []
 
 
@@ -98,6 +102,7 @@ class WindowClass(QMainWindow, form_class) :
         self.save_btn.clicked.connect(self.save_json_file)
         self.listWidget.itemClicked.connect(self.Clicked_list_item)
         self.infospot_add_btn.clicked.connect(self.infospot_add)
+        self.video_spot_add_btn.clicked.connect(self.vinfospot_add)
         self.infospot_check_btn.clicked.connect(self.infospot_check)
 
 
@@ -120,27 +125,66 @@ class WindowClass(QMainWindow, form_class) :
         self.infospot_num += 1
         self.infospot_num_label.setText(str(self.infospot_num))
 
+    def vinfospot_add(self):
+        global vinfospot_index
+        global vinfo_list
+        global vinfo_desc_list
+        global vinfospot_url , vinfospot_title, vinfospot_information, web_vurl
+        vinfo_list = self.vinfo_list
+        vinfo_desc_list = self.vinfo_desc_list
+        clicked_points = WebEnginePage.point
+        vinfospot_url = self.second.second_text_vurl
+        vinfospot_title = self.second.second_text_name
+        vinfospot_information = self.second.second_text_vinfo
+
+
+        html_desc =  "\n"+"\t\t\t\t\t" + "<div id="+'"desc-container'+str(self.vinfospot_num)+'"' + " style="+'"display:none"'+">"+"\n"+\
+                     "\t\t\t\t\t" + " <iframe src =" + '"' +str(vinfospot_url) +'"' + "></iframe>"+"\n"+\
+                     "\t\t\t\t\t" + ' <div class="title">'+ '"' + str(vinfospot_title) + '"' +"</div>"+"\n"+\
+                     "\t\t\t\t\t" + ' <div class="text">' +'"'+str(vinfospot_information)+'"'+"</div>"+"\n"+\
+                     "\t\t\t\t\t" + "</div>"+"\n"
+
+        html_vinfo = "\n"+"\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + " = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);""\n" + \
+                     "\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
+                     "\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + ".addHoverElement(document.getElementById('" + "desc-container"+str(self.vinfospot_num) + "'), 200);" + "\n" + \
+                     "\t\t\t\t\t\t" + "panorama1.add( vinfospot" + str(self.vinfospot_num) + " );" + "\n"
+
+        #"\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + ".addEventListener( 'click', function(){this.focus();} );" + "\n" + \
+        vinfo_list.append(str(html_vinfo))
+        vinfo_desc_list.append(str(html_desc))
+
+        self.vinfospot_num += 1
+        self.vinfospot_num_label.setText(str(self.vinfospot_num))
+
     def infospot_check(self):
         global infospot_information
 
         # for item in info_list:
         #     print (item)
 
-        # url 주소를 적용
+        # 인포스팟 정보 땡겨오기
         information_text = self.information_textEdit.toPlainText()
         self.information_label.setText(information_text)
         infospot_information = self.information_label.text()
 
+    def vinfospot_check(self):
+        global vinfospot_url, vinfospot_title, vinfospot_information
+
+        vinformation_text_title = self.vinformation_textEdit.toPlainText()
+        self.vinformation_label.setText(vinformation_text_title)
+        vinfospot_title = self.vinformation_label.text()
 
 
     def get_html(self):
         self.infospot_num = 0
+        self.vinfospot_num = 0
         self.infospot_num_label.setText(str(self.infospot_num))
+        self.vinfospot_num_label.setText(str(self.vinfospot_num))
         print("make html")
         global images_path
         global file_path_item
         global info_list
-        clicked_points = WebEnginePage.point
+        global vinfo_list, vinfo_desc_list
 
 
         relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
@@ -165,6 +209,8 @@ class WindowClass(QMainWindow, form_class) :
                 </head>
                 <body>
                     <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
+        """
+        html_scripts = """
                     <script src="three.min.js"></script>
                     <script src="panolens.min.js"></script>
                     <script>
@@ -210,7 +256,7 @@ class WindowClass(QMainWindow, form_class) :
             </html>
         """
         html_file_path = html_path + '/' + 'html_file.html'
-        html_text = html_text1 + html_Number + html_img + html_text2 + html_viewer
+        html_text = html_text1  + html_scripts + html_Number + html_img + html_text2 + html_viewer
 
         ######################
         if not os.path.exists(html_file_path):
@@ -218,39 +264,14 @@ class WindowClass(QMainWindow, form_class) :
                 html_file.write(html_text)
         else:
             print("already_exist")
-            # file_data= {}
-            # with open(html_file_path, "r") as html_file:
-            #     html_file.read()
-
-            # # html_var = []
-            # html_info_list = []
-            # # info_num_list = []
-            # txt = "Num_index"
-            # Number = WindowClass.findTextCountInText(html_file_path, txt)
-            # Number += 1
-            #
-            # html_info = "\t\t\t\t" + "infospot" + str(Number) + " = new PANOLENS.Infospot();""\n" + \
-            #             "\t\t\t\t\t\t""infospot" + str(Number) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
-            #             "\t\t\t\t\t\t""infospot" + str(Number) + ".addHoverText('Infospot');""\n"+\
-            #             "\t\t\t\t\t\t""infospot" + str(Number) + ".addEventListener( 'click', onfocus );" + "\n" + \
-            #             "\t\t\t\t\t\t""panorama1.add( infospot" + str(Number) + " );"
-            #
-            # html_info_list.append(str(html_info))
-
-
-
-
-            #PANOLENS.DataImage.Info
-            # html_info_list.append(html_info)
-            #
-            # info_num_list.append("infospot"+Number)
-            # html_infospot_add = "\t\t\t" + "panorama1.add( infospot"+Number+");"
 
             #####연습######
             infospots = '\n'.join(info_list)
+            video_infospots = '\n'.join(vinfo_list)
+            video_desc = '\n'.join(vinfo_desc_list)
 
 
-            html_text = html_text1 + html_Number+ html_img + html_text2 + infospots + html_viewer
+            html_text = html_text1 + video_desc + html_scripts + html_Number + html_img + html_text2 + infospots +video_infospots + html_viewer
 
 
             with open('html_file.html', 'w') as html_file:
@@ -486,6 +507,7 @@ class WindowClass(QMainWindow, form_class) :
         global item #파일명
         global file_name_item
         global file_path_item
+        global name
 
         ext = "_json"
         json_path = images_path+ext

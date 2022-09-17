@@ -10,7 +10,7 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.setFixedSize(380,770)                        #창크기 고정
+        self.setFixedSize(380,870)                        #창크기 고정
         self.initUI()
         self.show() #두번째창 실행
 
@@ -68,6 +68,10 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
         name = self.name_txt_edit.toPlainText()
         self.name_label.setText(name)
         self.second_text_name = self.name_label.text()
+        #비디오 정보를 기록 함
+        vinformation = self.vurl_information_txt_edit.toPlainText()
+        self.vinfo_label.setText(vinformation)
+        self.second_text_vinfo = self.vinfo_label.text()
         #도시,지방 이름을 적용(특별시,광역시 시 단위로 작성)
         city = self.city_txt_edit.toPlainText()
         self.city_label.setText(city)

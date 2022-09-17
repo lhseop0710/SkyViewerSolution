@@ -9,6 +9,20 @@
                 </head>
                 <body>
                     <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
+        
+					<div id="desc-container1" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/BfPgJJJiUgE "></iframe>
+					 <div class="title">"None"</div>
+					 <div class="text">"texting information"</div>
+					</div>
+
+
+					<div id="desc-container2" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/BfPgJJJiUgE "></iframe>
+					 <div class="title">"None"</div>
+					 <div class="text">"texting information"</div>
+					</div>
+
                     <script src="three.min.js"></script>
                     <script src="panolens.min.js"></script>
                     <script>
@@ -41,15 +55,26 @@
                         });
                         
         						infospot1 = new PANOLENS.Infospot();
-						infospot1.position.set( -2039.9626568858248, -5000, -1028.076053823066 );
+						infospot1.position.set( 5000, 1408.3400211472554, -4301.808992294007 );
 						infospot1.addHoverText('infospot');
 						infospot1.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot1 );
 						infospot2 = new PANOLENS.Infospot();
-						infospot2.position.set( 232.93941695392346, -5000, -3029.1855141852006 );
+						infospot2.position.set( -340.1503999172091, 161.45305694827925, -5000 );
 						infospot2.addHoverText('infospot');
 						infospot2.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot2 );
+						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot1.position.set( 5000, -19.8662312641846, 83.35700988870323 );
+						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
+						panorama1.add( vinfospot1 );
+
+
+						vinfospot2 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot2.position.set( 2912.6239693706293, 843.158423336171, -5000 );
+						vinfospot2.addHoverElement(document.getElementById('desc-container2'), 200);
+						panorama1.add( vinfospot2 );
+
                         viewer.add( panorama1 );
                     </script>
                 </body>

@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>900</height>
+    <height>1007</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
       <x>1222</x>
       <y>10</y>
       <width>21</width>
-      <height>831</height>
+      <height>711</height>
      </rect>
     </property>
     <property name="lineWidth">
@@ -42,7 +42,7 @@
       <x>1340</x>
       <y>146</y>
       <width>241</width>
-      <height>281</height>
+      <height>251</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -58,8 +58,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>1256</x>
-      <y>477</y>
+      <x>19</x>
+      <y>761</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -71,9 +71,9 @@
    <widget class="QLabel" name="file_name_label">
     <property name="geometry">
      <rect>
-      <x>1296</x>
-      <y>475</y>
-      <width>281</width>
+      <x>59</x>
+      <y>759</y>
+      <width>251</width>
       <height>18</height>
      </rect>
     </property>
@@ -118,9 +118,9 @@
    <widget class="QLabel" name="file_path_label">
     <property name="geometry">
      <rect>
-      <x>1296</x>
-      <y>501</y>
-      <width>281</width>
+      <x>59</x>
+      <y>785</y>
+      <width>251</width>
       <height>18</height>
      </rect>
     </property>
@@ -134,8 +134,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>1256</x>
-      <y>503</y>
+      <x>19</x>
+      <y>787</y>
       <width>31</width>
       <height>16</height>
      </rect>
@@ -147,8 +147,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>600</y>
+      <x>20</x>
+      <y>813</y>
       <width>80</width>
       <height>16</height>
      </rect>
@@ -160,9 +160,9 @@
    <widget class="QLabel" name="resolution_label">
     <property name="geometry">
      <rect>
-      <x>1336</x>
-      <y>598</y>
-      <width>240</width>
+      <x>101</x>
+      <y>811</y>
+      <width>211</width>
       <height>18</height>
      </rect>
     </property>
@@ -176,8 +176,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>625</y>
+      <x>325</x>
+      <y>761</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -189,8 +189,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>650</y>
+      <x>325</x>
+      <y>786</y>
       <width>61</width>
       <height>16</height>
      </rect>
@@ -202,8 +202,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>703</y>
+      <x>326</x>
+      <y>811</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -215,9 +215,9 @@
    <widget class="QLabel" name="index_label">
     <property name="geometry">
      <rect>
-      <x>1316</x>
-      <y>701</y>
-      <width>260</width>
+      <x>406</x>
+      <y>809</y>
+      <width>111</width>
       <height>18</height>
      </rect>
     </property>
@@ -231,8 +231,8 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>732</y>
+      <x>326</x>
+      <y>833</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -244,9 +244,9 @@
    <widget class="QLabel" name="file_path_label_6">
     <property name="geometry">
      <rect>
-      <x>1316</x>
-      <y>730</y>
-      <width>260</width>
+      <x>406</x>
+      <y>833</y>
+      <width>111</width>
       <height>18</height>
      </rect>
     </property>
@@ -260,8 +260,8 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>760</y>
+      <x>629</x>
+      <y>759</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -273,9 +273,9 @@
    <widget class="QLabel" name="point_x_label">
     <property name="geometry">
      <rect>
-      <x>1316</x>
-      <y>758</y>
-      <width>260</width>
+      <x>690</x>
+      <y>757</y>
+      <width>141</width>
       <height>18</height>
      </rect>
     </property>
@@ -289,8 +289,8 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>790</y>
+      <x>629</x>
+      <y>789</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -302,9 +302,9 @@
    <widget class="QLabel" name="point_y_label">
     <property name="geometry">
      <rect>
-      <x>1316</x>
-      <y>788</y>
-      <width>260</width>
+      <x>690</x>
+      <y>787</y>
+      <width>141</width>
       <height>20</height>
      </rect>
     </property>
@@ -318,9 +318,9 @@
    <widget class="QLabel" name="lat_label">
     <property name="geometry">
      <rect>
-      <x>1336</x>
-      <y>624</y>
-      <width>240</width>
+      <x>406</x>
+      <y>760</y>
+      <width>211</width>
       <height>18</height>
      </rect>
     </property>
@@ -334,9 +334,9 @@
    <widget class="QLabel" name="long_label">
     <property name="geometry">
      <rect>
-      <x>1336</x>
-      <y>648</y>
-      <width>240</width>
+      <x>406</x>
+      <y>784</y>
+      <width>211</width>
       <height>18</height>
      </rect>
     </property>
@@ -350,8 +350,8 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>1360</x>
-      <y>555</y>
+      <x>570</x>
+      <y>730</y>
       <width>111</width>
       <height>21</height>
      </rect>
@@ -366,8 +366,8 @@
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>1362</x>
-      <y>444</y>
+      <x>270</x>
+      <y>730</y>
       <width>111</width>
       <height>21</height>
      </rect>
@@ -383,7 +383,7 @@
     <property name="geometry">
      <rect>
       <x>1241</x>
-      <y>528</y>
+      <y>491</y>
       <width>350</width>
       <height>16</height>
      </rect>
@@ -399,8 +399,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>720</y>
-      <width>1211</width>
+      <y>713</y>
+      <width>1221</width>
       <height>16</height>
      </rect>
     </property>
@@ -432,8 +432,8 @@
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>1255</x>
-      <y>819</y>
+      <x>629</x>
+      <y>818</y>
       <width>51</width>
       <height>16</height>
      </rect>
@@ -445,9 +445,9 @@
    <widget class="QLabel" name="point_z_label">
     <property name="geometry">
      <rect>
-      <x>1316</x>
-      <y>817</y>
-      <width>260</width>
+      <x>690</x>
+      <y>816</y>
+      <width>141</width>
       <height>20</height>
      </rect>
     </property>
@@ -462,9 +462,9 @@
     <property name="geometry">
      <rect>
       <x>1240</x>
-      <y>150</y>
+      <y>147</y>
       <width>98</width>
-      <height>271</height>
+      <height>251</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -509,9 +509,9 @@
     <property name="geometry">
      <rect>
       <x>1239</x>
-      <y>677</y>
+      <y>612</y>
       <width>350</width>
-      <height>16</height>
+      <height>10</height>
      </rect>
     </property>
     <property name="lineWidth">
@@ -524,24 +524,24 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>21</x>
-      <y>740</y>
-      <width>371</width>
-      <height>101</height>
+      <x>1250</x>
+      <y>410</y>
+      <width>331</width>
+      <height>71</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
-      <widget class="QPushButton" name="btn_adjust">
-       <property name="text">
-        <string>Adjust</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
       <widget class="QPushButton" name="save_btn">
        <property name="text">
         <string>SAVE</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="btn_adjust">
+       <property name="text">
+        <string>Adjust</string>
        </property>
       </widget>
      </item>
@@ -557,20 +557,13 @@
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>740</y>
-      <width>501</width>
-      <height>101</height>
+      <x>1250</x>
+      <y>510</y>
+      <width>331</width>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="infospot_add_btn">
-       <property name="text">
-        <string>Infospot_add</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QPushButton" name="video_spot_add_btn">
        <property name="text">
@@ -588,8 +581,15 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="infospot_add_btn">
+       <property name="text">
+        <string>Infospot_add</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="1">
-      <widget class="QLabel" name="videospot_num_label">
+      <widget class="QLabel" name="vinfospot_num_label">
        <property name="frameShape">
         <enum>QFrame::Box</enum>
        </property>
@@ -598,21 +598,14 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2" colspan="2">
-      <widget class="QPushButton" name="infospot_check_btn">
-       <property name="text">
-        <string>check</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="QTextEdit" name="information_textEdit">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>750</y>
-      <width>271</width>
+      <x>1240</x>
+      <y>660</y>
+      <width>171</width>
       <height>31</height>
      </rect>
     </property>
@@ -627,10 +620,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="information_label">
     <property name="geometry">
      <rect>
-      <x>940</x>
-      <y>790</y>
-      <width>271</width>
-      <height>41</height>
+      <x>1240</x>
+      <y>700</y>
+      <width>171</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -638,6 +631,128 @@ p, li { white-space: pre-wrap; }
     </property>
     <property name="text">
      <string>infospot</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="infospot_check_btn">
+    <property name="geometry">
+     <rect>
+      <x>1270</x>
+      <y>620</y>
+      <width>116</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>info_check</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="vinfospot_check_btn">
+    <property name="geometry">
+     <rect>
+      <x>1450</x>
+      <y>620</y>
+      <width>116</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>vinfo_check</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="vinformation_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>1420</x>
+      <y>660</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;infospot&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="vinformation_label">
+    <property name="geometry">
+     <rect>
+      <x>1420</x>
+      <y>700</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>infospot</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="information_textEdit_3">
+    <property name="geometry">
+     <rect>
+      <x>939</x>
+      <y>740</y>
+      <width>231</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;infospot&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="information_label_3">
+    <property name="geometry">
+     <rect>
+      <x>1179</x>
+      <y>740</y>
+      <width>291</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>infospot</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="information_textEdit_4">
+    <property name="geometry">
+     <rect>
+      <x>939</x>
+      <y>780</y>
+      <width>531</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;infospot&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>872</x>
+      <y>746</y>
+      <width>51</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>point_x: </string>
     </property>
    </widget>
   </widget>
