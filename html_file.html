@@ -40,11 +40,16 @@
                             console.log(JSON.stringify(a));
                         });
                         
-        				infospot1 = new PANOLENS.Infospot();
-						infospot1.position.set( 4999.999999999999, -3854.900290722571, 76.33598479975754 );
-						infospot1.addHoverText('Infospot');
-						infospot1.addEventListener( 'click', onfocus );
+        						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( -2039.9626568858248, -5000, -1028.076053823066 );
+						infospot1.addHoverText('infospot');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( 232.93941695392346, -5000, -3029.1855141852006 );
+						infospot2.addHoverText('infospot');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot2 );
                         viewer.add( panorama1 );
                     </script>
                 </body>

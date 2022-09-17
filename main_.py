@@ -46,6 +46,9 @@ class WindowClass(QMainWindow, form_class) :
     url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/index.html')  #html을 넣고 구동시키는 형태
     images_path = []
     widget_List = []
+    infospot_num = 1
+    info_list = []
+    infospot_index = ""
     # file_name = []
 
 
@@ -94,13 +97,51 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_Image_Data_Generator.clicked.connect(self.Image_Labling)
         self.save_btn.clicked.connect(self.save_json_file)
         self.listWidget.itemClicked.connect(self.Clicked_list_item)
+        self.infospot_add_btn.clicked.connect(self.infospot_add)
+        self.infospot_check_btn.clicked.connect(self.infospot_check)
+
+
+
+    def infospot_add(self):
+        global infospot_index
+        global info_list
+        global infospot_information
+        clicked_points = WebEnginePage.point
+        info_list = self.info_list
+
+        html_info = "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + " = new PANOLENS.Infospot();""\n" + \
+                    "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
+                    "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addHoverText('"+ str(infospot_information)+"');" + "\n" + \
+                    "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addEventListener( 'click', function(){this.focus();} );" + "\n" + \
+                    "\t\t\t\t\t\t" + "panorama1.add( infospot" + str(self.infospot_num) + " );"
+
+
+        info_list.append(str(html_info))
+        self.infospot_num += 1
+        self.infospot_num_label.setText(str(self.infospot_num))
+
+    def infospot_check(self):
+        global infospot_information
+
+        # for item in info_list:
+        #     print (item)
+
+        # url 주소를 적용
+        information_text = self.information_textEdit.toPlainText()
+        self.information_label.setText(information_text)
+        infospot_information = self.information_label.text()
+
 
 
     def get_html(self):
+        self.infospot_num = 0
+        self.infospot_num_label.setText(str(self.infospot_num))
         print("make html")
         global images_path
         global file_path_item
+        global info_list
         clicked_points = WebEnginePage.point
+
 
         relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
         ext = "_html"
@@ -181,18 +222,23 @@ class WindowClass(QMainWindow, form_class) :
             # with open(html_file_path, "r") as html_file:
             #     html_file.read()
 
-            # html_var = []
+            # # html_var = []
             # html_info_list = []
-            # info_num_list = []
-            txt = "Num_index"
-            Number = WindowClass.findTextCountInText(html_file_path, txt)
-            Number += 1
+            # # info_num_list = []
+            # txt = "Num_index"
+            # Number = WindowClass.findTextCountInText(html_file_path, txt)
+            # Number += 1
+            #
+            # html_info = "\t\t\t\t" + "infospot" + str(Number) + " = new PANOLENS.Infospot();""\n" + \
+            #             "\t\t\t\t\t\t""infospot" + str(Number) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
+            #             "\t\t\t\t\t\t""infospot" + str(Number) + ".addHoverText('Infospot');""\n"+\
+            #             "\t\t\t\t\t\t""infospot" + str(Number) + ".addEventListener( 'click', onfocus );" + "\n" + \
+            #             "\t\t\t\t\t\t""panorama1.add( infospot" + str(Number) + " );"
+            #
+            # html_info_list.append(str(html_info))
 
-            html_info = "\t\t\t\t" + "infospot" + str(Number) + " = new PANOLENS.Infospot();""\n" + \
-                        "\t\t\t\t\t\t""infospot" + str(Number) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
-                        "\t\t\t\t\t\t""infospot" + str(Number) + ".addHoverText('Infospot');""\n"+\
-                        "\t\t\t\t\t\t""infospot" + str(Number) + ".addEventListener( 'click', onfocus );" + "\n" + \
-                        "\t\t\t\t\t\t""panorama1.add( infospot" + str(Number) + " );"
+
+
 
             #PANOLENS.DataImage.Info
             # html_info_list.append(html_info)
@@ -200,8 +246,11 @@ class WindowClass(QMainWindow, form_class) :
             # info_num_list.append("infospot"+Number)
             # html_infospot_add = "\t\t\t" + "panorama1.add( infospot"+Number+");"
 
+            #####연습######
+            infospots = '\n'.join(info_list)
 
-            html_text = html_text1 + html_Number+ html_img + html_text2 + html_info + html_viewer
+
+            html_text = html_text1 + html_Number+ html_img + html_text2 + infospots + html_viewer
 
 
             with open('html_file.html', 'w') as html_file:

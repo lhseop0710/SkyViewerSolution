@@ -84,32 +84,6 @@
      <string> Undifined</string>
     </property>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>860</x>
-      <y>740</y>
-      <width>331</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QPushButton" name="btn_loadFromFile">
-       <property name="text">
-        <string>Select Directory</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_Delete_List">
-       <property name="text">
-        <string>Delete File List</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QLabel" name="image_Label">
     <property name="geometry">
      <rect>
@@ -488,12 +462,26 @@
     <property name="geometry">
      <rect>
       <x>1240</x>
-      <y>210</y>
+      <y>150</y>
       <width>98</width>
-      <height>181</height>
+      <height>271</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QPushButton" name="btn_loadFromFile">
+       <property name="text">
+        <string>Directory</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btn_Delete_List">
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QPushButton" name="btn_Previous">
        <property name="text">
@@ -502,16 +490,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="get_html_btn">
+      <widget class="QPushButton" name="btn_Next">
        <property name="text">
-        <string>Get_html</string>
+        <string>Down</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btn_Next">
+      <widget class="QPushButton" name="get_html_btn">
        <property name="text">
-        <string>Down</string>
+        <string>Get_html</string>
        </property>
       </widget>
      </item>
@@ -536,7 +524,7 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>460</x>
+      <x>21</x>
       <y>740</y>
       <width>371</width>
       <height>101</height>
@@ -565,6 +553,92 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>740</y>
+      <width>501</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="infospot_add_btn">
+       <property name="text">
+        <string>Infospot_add</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="video_spot_add_btn">
+       <property name="text">
+        <string>Video_spot_add</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="infospot_num_label">
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string> Undifined</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="videospot_num_label">
+       <property name="frameShape">
+        <enum>QFrame::Box</enum>
+       </property>
+       <property name="text">
+        <string> Undifined</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2" colspan="2">
+      <widget class="QPushButton" name="infospot_check_btn">
+       <property name="text">
+        <string>check</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QTextEdit" name="information_textEdit">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>750</y>
+      <width>271</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;infospot&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="information_label">
+    <property name="geometry">
+     <rect>
+      <x>940</x>
+      <y>790</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>infospot</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
