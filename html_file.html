@@ -10,15 +10,15 @@
                 <body>
                     <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
         
-					<div id="desc-container1" style="display:none">
-					 <iframe src ="https://www.youtube.com/embed/BfPgJJJiUgE "></iframe>
+					<div id="desc-container0" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/M4fx5O6vTbY"></iframe>
 					 <div class="title">"None"</div>
 					 <div class="text">"texting information"</div>
 					</div>
 
 
-					<div id="desc-container2" style="display:none">
-					 <iframe src ="https://www.youtube.com/embed/BfPgJJJiUgE "></iframe>
+					<div id="desc-container1" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/M4fx5O6vTbY"></iframe>
 					 <div class="title">"None"</div>
 					 <div class="text">"texting information"</div>
 					</div>
@@ -54,26 +54,41 @@
                             console.log(JSON.stringify(a));
                         });
                         
-        						infospot1 = new PANOLENS.Infospot();
-						infospot1.position.set( 5000, 1408.3400211472554, -4301.808992294007 );
+        						infospot0 = new PANOLENS.Infospot();
+						infospot0.position.set( 2797.5006923350006, -680.1263151089696, -4999.999999999999 );
+						infospot0.addHoverText('infospot');
+						infospot0.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot0 );
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( 3131.1475638978923, -2083.1541852708665, -5000 );
 						infospot1.addHoverText('infospot');
 						infospot1.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot1 );
 						infospot2 = new PANOLENS.Infospot();
-						infospot2.position.set( -340.1503999172091, 161.45305694827925, -5000 );
+						infospot2.position.set( -2730.824863184614, 519.0562009353828, 5000.000000000001 );
 						infospot2.addHoverText('infospot');
 						infospot2.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot2 );
+						infospot0 = new PANOLENS.Infospot();
+						infospot0.position.set( 5000.000000000001, -949.6930331408903, -2778.3389118785394 );
+						infospot0.addHoverText('hi jae sung');
+						infospot0.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot0 );
+						infospot0 = new PANOLENS.Infospot();
+						infospot0.position.set( -5000.000000000001, -2499.3350349737348, 1149.1498119659364 );
+						infospot0.addHoverText('namja toilet');
+						infospot0.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot0 );
+						vinfospot0 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot0.position.set( 5000, -1.3630222239113403, -21.234775661264052 );
+						vinfospot0.addHoverElement(document.getElementById('desc-container0'), 200);
+						panorama1.add( vinfospot0 );
+
+
 						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
-						vinfospot1.position.set( 5000, -19.8662312641846, 83.35700988870323 );
+						vinfospot1.position.set( 3948.8670326365454, 81.26433404833463, 5000 );
 						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
 						panorama1.add( vinfospot1 );
-
-
-						vinfospot2 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
-						vinfospot2.position.set( 2912.6239693706293, 843.158423336171, -5000 );
-						vinfospot2.addHoverElement(document.getElementById('desc-container2'), 200);
-						panorama1.add( vinfospot2 );
 
                         viewer.add( panorama1 );
                     </script>

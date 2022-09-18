@@ -46,13 +46,18 @@ class WindowClass(QMainWindow, form_class) :
     url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/index.html')  #html을 넣고 구동시키는 형태
     images_path = []
     widget_List = []
-    infospot_num = 1            #inforpot 인덱싱 넘버 부여
-    vinfospot_num = 1           #video-infospot 인덱싱 넘버 부여
+    infospot_num = 0            #inforpot 인덱싱 넘버 부여
+    vinfospot_num =0           #video-infospot 인덱싱 넘버 부여
+    panolink_num = 0
     info_list = []              #infospot 리스트로 추가적으로 반환받아 보관
     vinfo_desc_list = []             #vinfospot 콘테이너를 리스트로 추가적으로 반환받아 보관
-    vinfo_list = []
+    vinfo_list = []                  #vinfospot 을 리스트로 추가하기 위함
+    image_list=[]
+    image_index = ""
+    panolink_list = []                 #이미지간 연결을 해주기 위해 리스트로 추가
     infospot_index = ""         #infospot 내용 문자열 추가
     vinfospot_index = ""        #vinfospot 내용 문자열 추가
+    panolink_index = ""         #링크 내용 문자열 추가
     # file_name = []
 
 
@@ -64,7 +69,7 @@ class WindowClass(QMainWindow, form_class) :
     def __init__(self) :
         super().__init__()
         self.setupUi(self)
-        self.setFixedSize(1600,900)                        #창크기 고정
+        self.setFixedSize(1600,1000)                        #창크기 고정
         self.setWindowTitle("Sky Viewer Solution Data Creator" + " Vesion Beta")
         self.setWindowIcon(QIcon("/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/icon.png"))
         self.image_Label.setStyleSheet("background-image : url(%s)" %self.background_picture)
@@ -86,7 +91,7 @@ class WindowClass(QMainWindow, form_class) :
         self.webview = QtWebEngineWidgets.QWebEngineView()
         self.webview.setPage(self.page)
         self.webview.setWindowFlags(Qt.WindowStaysOnTopHint)  #| Qt.FramelessWindowHint
-        self.webview.setGeometry(15, 12, 1200, 675)
+        self.webview.setGeometry(15, 12, 1200, 700)
         self.webview.load(self.url)
         self.webview_layout.addWidget(self.webview)
 
@@ -104,7 +109,36 @@ class WindowClass(QMainWindow, form_class) :
         self.infospot_add_btn.clicked.connect(self.infospot_add)
         self.video_spot_add_btn.clicked.connect(self.vinfospot_add)
         self.infospot_check_btn.clicked.connect(self.infospot_check)
+        self.panolink_check1_btn.clicked.connect(self.make_panolink1)
+        self.panolink_check2_btn.clicked.connect(self.make_panolink2)
 
+    # def panolink_add(self):
+    #     clicked_points = WebEnginePage.point
+    #     global value, relpath
+    #     num = self.panolink_num
+    #
+    #     image_info = "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + " = new PANOLENS.Infospot();""\n" + \
+    #                 "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
+    #                 "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addHoverText('"+ str(infospot_information)+"');" + "\n" + \
+    #                 "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addEventListener( 'click', function(){this.focus();} );" + "\n" + \
+    #                 "\t\t\t\t\t\t" + "panorama1.add( infospot" + str(self.infospot_num) + " );"
+    #     "panorama"+str(num)+".link("+"panorama"+str(num+1)+"", new THREE.Vector3(-1106.42, -4277.19, -5000.00), 400, 'asset/textures/1941-battle-thumb.png' );
+    #     "panorama"+str(num+1)+".link("+"panorama"+str(num)+, new THREE.Vector3(2092.2, -159.02, -4530.91) );
+    #
+    #
+    #     info_list.append(str(html_info))
+    #     self.infospot_num += 1
+    #     self.infospot_num_label.setText(str(self.infospot_num))
+    # self.file_name_label.setText(file_name_item)  # 현재 행의 파일 명
+    # self.file_path_label.setText(file_path_item)  # 현재 행의 경로와 파일 명
+
+    def make_panolink1(self):
+        global file_name_item
+        self.panolink_file_label1.setText(file_name_item)
+
+    def make_panolink2(self):
+        global file_name_item
+        self.panolink_file_label2.setText(file_name_item)
 
 
     def infospot_add(self):
@@ -175,6 +209,8 @@ class WindowClass(QMainWindow, form_class) :
         vinfospot_title = self.vinformation_label.text()
 
 
+
+
     def get_html(self):
         self.infospot_num = 0
         self.vinfospot_num = 0
@@ -184,7 +220,7 @@ class WindowClass(QMainWindow, form_class) :
         global images_path
         global file_path_item
         global info_list
-        global vinfo_list, vinfo_desc_list
+        global vinfo_list, vinfo_desc_list, relpath
 
 
         relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
@@ -340,15 +376,23 @@ class WindowClass(QMainWindow, form_class) :
     def File_Dialog(self):
         global images_path
 
+
         images_path = QFileDialog.getExistingDirectory(self, 'Open File')
         self.images_path.append(images_path)
         file_list = os.listdir(images_path)
         print(images_path)
         file_list_py = [file for file in file_list if file.endswith(self.exts)]  ## 파일명 끝이 .jpg인 경우
-
         for file in sorted(file_list_py):
             self.listWidget.addItem(file)
             self.listWidget.setCurrentRow(0)    #default 값으로 인덱싱 넘버 0 번의 아이템을 클릭하도록 함
+
+        print(self.image_list)
+        #전체 아이템 개수
+        value = self.listWidget.count()
+        # setting text to the label
+        self.item_num_label.setText(str(value))
+
+
 
     def Clear_File_List(self):
         self.listWidget.clear()         #파일리스트 삭제
@@ -366,10 +410,13 @@ class WindowClass(QMainWindow, form_class) :
         global path
         global file_name_item
         global file_path_item
+        global value
+
         item = self.listWidget.currentItem()
         path = self.images_path
         file_name_item = item.text()
         file_path_item = str(path[0]) + "/" + item.text()
+
         if (item == None):
             self.file_name_label.setText("Undifined")
         else:

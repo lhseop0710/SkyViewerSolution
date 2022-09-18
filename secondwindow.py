@@ -26,7 +26,6 @@ class secondwindow(QDialog, QWidget, form_secondwindow):
         self.setWindowTitle("SVS_DATA_CREATOR" + " / Version Beta")
         self.setWindowFlag(Qt.WindowStaysOnTopHint)
 
-
     def Add_Object(self):
         query = self.Object_name_textEdit.toPlainText()
         self.Object_name_textEdit.setText("")
