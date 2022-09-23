@@ -10,15 +10,9 @@
                 <body>
                     <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
         
-					<div id="desc-container0" style="display:none">
-					 <iframe src ="https://www.youtube.com/embed/M4fx5O6vTbY"></iframe>
-					 <div class="title">"None"</div>
-					 <div class="text">"texting information"</div>
-					</div>
-
 
 					<div id="desc-container1" style="display:none">
-					 <iframe src ="https://www.youtube.com/embed/M4fx5O6vTbY"></iframe>
+					 <iframe src ="None"></iframe>
 					 <div class="title">"None"</div>
 					 <div class="text">"texting information"</div>
 					</div>
@@ -29,7 +23,90 @@
                         var panorama1;
                         var infospot1, infospot2, viewer;
         				var Num_index = 0;
-						panorama1 = new PANOLENS.ImagePanorama('./panorama_images/sejong_gumgang_bridge/sejong_gumgang_bridge_00000.JPG');
+
+						panorama1= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/a.jpeg');
+						panorama1.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama2= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/b.jpeg');
+						panorama2.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama3= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/c.jpeg');
+						panorama3.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama4= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/d.jpeg');
+						panorama4.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama5= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/e.jpeg');
+						panorama5.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama6= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/f.jpeg');
+						panorama6.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama7= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/g.jpeg');
+						panorama7.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama8= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/h.jpeg');
+						panorama8.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama9= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/i.jpeg');
+						panorama9.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama10= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/j.jpeg');
+						panorama10.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama11= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/k.jpeg');
+						panorama11.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama12= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/l.jpeg');
+						panorama12.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
 
                         viewer = new PANOLENS.Viewer({
                             container: document.body,        // A DOM Element container
@@ -47,50 +124,52 @@
                             indicatorSize: 30,            // Size of View Indicator
                             output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
                           });
-
-                        panorama1.addEventListener("click", function(e){
-                            if (e.intersects.length > 0) return;
-                            const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
-                            console.log(JSON.stringify(a));
-                        });
                         
-        						infospot0 = new PANOLENS.Infospot();
-						infospot0.position.set( 2797.5006923350006, -680.1263151089696, -4999.999999999999 );
-						infospot0.addHoverText('infospot');
-						infospot0.addEventListener( 'click', function(){this.focus();} );
-						panorama1.add( infospot0 );
+        
 						infospot1 = new PANOLENS.Infospot();
-						infospot1.position.set( 3131.1475638978923, -2083.1541852708665, -5000 );
+						infospot1.position.set( 5000.000000000001, -445.46878695161433, 2902.277980214699 );
 						infospot1.addHoverText('infospot');
 						infospot1.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot1 );
 						infospot2 = new PANOLENS.Infospot();
-						infospot2.position.set( -2730.824863184614, 519.0562009353828, 5000.000000000001 );
+						infospot2.position.set( 5000, -2268.65777435643, 3225.8815903731943 );
 						infospot2.addHoverText('infospot');
 						infospot2.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot2 );
-						infospot0 = new PANOLENS.Infospot();
-						infospot0.position.set( 5000.000000000001, -949.6930331408903, -2778.3389118785394 );
-						infospot0.addHoverText('hi jae sung');
-						infospot0.addEventListener( 'click', function(){this.focus();} );
-						panorama1.add( infospot0 );
-						infospot0 = new PANOLENS.Infospot();
-						infospot0.position.set( -5000.000000000001, -2499.3350349737348, 1149.1498119659364 );
-						infospot0.addHoverText('namja toilet');
-						infospot0.addEventListener( 'click', function(){this.focus();} );
-						panorama1.add( infospot0 );
-						vinfospot0 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
-						vinfospot0.position.set( 5000, -1.3630222239113403, -21.234775661264052 );
-						vinfospot0.addHoverElement(document.getElementById('desc-container0'), 200);
-						panorama1.add( vinfospot0 );
-
 
 						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
-						vinfospot1.position.set( 3948.8670326365454, 81.26433404833463, 5000 );
+						vinfospot1.position.set( 445.15208515073084, -1701.5381075259202, -5000 );
 						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
 						panorama1.add( vinfospot1 );
 
-                        viewer.add( panorama1 );
+						panorama1.link(panorama2, new THREE.Vector3(5000, -255.97809284345698, 193.4258564288043 ), 400 );
+
+						panorama1.link(panorama0, new THREE.Vector3(-5000, 267.86156247743395, -233.5946293306177 ), 400 );
+
+						viewer.add( panorama1);
+
+						viewer.add( panorama2);
+
+						viewer.add( panorama3);
+
+						viewer.add( panorama4);
+
+						viewer.add( panorama5);
+
+						viewer.add( panorama6);
+
+						viewer.add( panorama7);
+
+						viewer.add( panorama8);
+
+						viewer.add( panorama9);
+
+						viewer.add( panorama10);
+
+						viewer.add( panorama11);
+
+						viewer.add( panorama12);
+
                     </script>
                 </body>
             </html>

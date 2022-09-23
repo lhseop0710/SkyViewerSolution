@@ -25,7 +25,7 @@ class Handler(QObject):
         super(Handler, self).__init__(*args, **kwargs)
 
 class WebEnginePage(QWebEnginePage):
-    point = []
+    point = [[0,0,0]]
     def __init__(self, *args, **kwargs):
         super(WebEnginePage, self).__init__(*args, **kwargs)
 
@@ -40,27 +40,29 @@ class WebEnginePage(QWebEnginePage):
 class WindowClass(QMainWindow, form_class) :
     count_load_image = 0
     count_save_image = 0
-    image_directory_path = "/Users/leehoseop/PycharmProjects/pano_dataset/sejong_gumgang_bridge/"
-    exts = ('.jpg', 'png', '.JPG', '.PNG', 'jpeg', 'JPEG')
-    background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/icon.png"
+    number = 1
+    image_directory_path = "/Users/leehoseop/PycharmProjects/pano_dataset/sejong_lake/"
+    exts = ('.jpg', 'png', '.JPG', '.PNG', '.jpeg', '.JPEG')
+    background_picture = "/Users/leehoseop/PycharmProjects/SVS_Data_Creator/images/icon.jpg"
     url = QtCore.QUrl().fromLocalFile(os.path.split(os.path.abspath(__file__))[0] + r'/index.html')  #html을 넣고 구동시키는 형태
     images_path = []
     widget_List = []
     infospot_num = 0            #inforpot 인덱싱 넘버 부여
     vinfospot_num =0           #video-infospot 인덱싱 넘버 부여
-    panolink_num = 0
-    info_list = []              #infospot 리스트로 추가적으로 반환받아 보관
-    vinfo_desc_list = []             #vinfospot 콘테이너를 리스트로 추가적으로 반환받아 보관
-    vinfo_list = []                  #vinfospot 을 리스트로 추가하기 위함
-    image_list=[]
+    panolink_num = 1
+    viewer_num = 0
+    info_list = [""]              #infospot 리스트로 추가적으로 반환받아 보관
+    vinfo_desc_list = [""]             #vinfospot 콘테이너를 리스트로 추가적으로 반환받아 보관
+    vinfo_list = [""]                  #vinfospot 을 리스트로 추가하기 위함
+    image_list=[""]               # 파노링크 이미지 리스트로 추가
+    panolink_forward_list = [""]          # 이미지간 연결을 해주기 위해 리스트로 추가
+    panolink_backward_list = [""]
+    viewer_list = [""]
     image_index = ""
-    panolink_list = []                 #이미지간 연결을 해주기 위해 리스트로 추가
     infospot_index = ""         #infospot 내용 문자열 추가
     vinfospot_index = ""        #vinfospot 내용 문자열 추가
     panolink_index = ""         #링크 내용 문자열 추가
-    # file_name = []
-
-
+    viewer_index = ""
 
     def initUI(self):
         self.show()
@@ -109,54 +111,99 @@ class WindowClass(QMainWindow, form_class) :
         self.infospot_add_btn.clicked.connect(self.infospot_add)
         self.video_spot_add_btn.clicked.connect(self.vinfospot_add)
         self.infospot_check_btn.clicked.connect(self.infospot_check)
-        self.panolink_check1_btn.clicked.connect(self.make_panolink1)
-        self.panolink_check2_btn.clicked.connect(self.make_panolink2)
+        self.panolink_check1_btn.clicked.connect(self.panolink1_image_check)
+        self.panolink_check2_btn.clicked.connect(self.panolink2_image_check)
+        self.panolink_add1_btn.clicked.connect(self.make_front_panolink)
+        self.panolink_add2_btn.clicked.connect(self.make_backward_panolink)
+        # self.viewer_add_btn.clicked.connect(self.make_viewer)
 
-    # def panolink_add(self):
-    #     clicked_points = WebEnginePage.point
-    #     global value, relpath
-    #     num = self.panolink_num
-    #
-    #     image_info = "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + " = new PANOLENS.Infospot();""\n" + \
-    #                 "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
-    #                 "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addHoverText('"+ str(infospot_information)+"');" + "\n" + \
-    #                 "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addEventListener( 'click', function(){this.focus();} );" + "\n" + \
-    #                 "\t\t\t\t\t\t" + "panorama1.add( infospot" + str(self.infospot_num) + " );"
-    #     "panorama"+str(num)+".link("+"panorama"+str(num+1)+"", new THREE.Vector3(-1106.42, -4277.19, -5000.00), 400, 'asset/textures/1941-battle-thumb.png' );
-    #     "panorama"+str(num+1)+".link("+"panorama"+str(num)+, new THREE.Vector3(2092.2, -159.02, -4530.91) );
-    #
-    #
-    #     info_list.append(str(html_info))
-    #     self.infospot_num += 1
-    #     self.infospot_num_label.setText(str(self.infospot_num))
-    # self.file_name_label.setText(file_name_item)  # 현재 행의 파일 명
-    # self.file_path_label.setText(file_path_item)  # 현재 행의 경로와 파일 명
+    def make_front_panolink(self):
+        clicked_points = WebEnginePage.point
+        global value, relpath, image_list, panolink_forward_list, viewer_list
+        num = self.listWidget.currentRow()
+        image_list = self.image_list
+        panolink_forward_list = self.panolink_forward_list
+        viewer_list = self.viewer_list
+        num += 1
 
-    def make_panolink1(self):
+        panolink_info = "\t\t\t\t\t\t"+"panorama"+str(num)+".link("+"panorama"+str(num+1)+", new THREE.Vector3("+ str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " ), 400 );" + "\n"
+
+        panolink_forward_list.append(str(panolink_info))
+
+    def make_backward_panolink(self):
+        clicked_points = WebEnginePage.point
+        global value, relpath, image_list, panolink_backward_list, viewer_list
+        num = self.listWidget.currentRow()
+        image_list = self.image_list
+        panolink_backward_list = self.panolink_backward_list
+        viewer_list = self.viewer_list
+        num += 1
+
+        panolink_info = "\t\t\t\t\t\t"+"panorama"+str(num)+".link("+"panorama"+str(num-1)+", new THREE.Vector3("+ str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " ), 400 );" + "\n"
+
+        panolink_backward_list.append(str(panolink_info))
+
+
+    # def make_viewer(self):
+    #     global value, relpath, image_list, panolink_list, viewer_list, file_path_item
+    #     image_list = self.image_list
+    #     viewer_list = self.viewer_list
+    #     self.viewer_num += 1
+    #     num = self.listWidget.currentRow()
+    #     relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
+    #
+    #     image_info = "\t\t\t\t\t\t"+"panorama"+str(num+1)+"= new PANOLENS.ImagePanorama(""'./" + relpath + "'"");" "\n" + \
+    #                  "\t\t\t\t\t\t"+"panorama"+str(num+1)+".addEventListener("'"click"'+ ", function(e) {"+ "\n" + \
+    #                  "\t\t\t\t\t\t"+"   if (e.intersects.length > 0) return;"+ "\n" + \
+    #                  "\t\t\t\t\t\t"+"   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;" + "\n" + \
+    #                  "\t\t\t\t\t\t"+"   console.log(JSON.stringify(a));"+ "\n" + \
+    #                  "\t\t\t\t\t\t"+"});"+ "\n"
+    #                  # "\t\t\t\t\t\t"+"panorama" + str(num+1) + "= new PANOLENS.ImagePanorama(""'./" + str(self.panolink_file_label2.text()) + "'"");" + "\n" + \
+    #                  # "\t\t\t\t\t\t"+"panorama" + str(num+1) + ".addEventListener("'"click"' + ", function(e) {" + "\n" + \
+    #                  # "\t\t\t\t\t\t"+"   if (e.intersects.length > 0) return;" + "\n" + \
+    #                  # "\t\t\t\t\t\t"+"   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;" + "\n" + \
+    #                  # "\t\t\t\t\t\t"+"   console.log(JSON.stringify(a));" + "\n" + \
+    #                  # "\t\t\t\t\t\t"+"});"
+    #
+    #
+    #     image_list.append(str(image_info))
+    #     self.viewer_num_label.setText(str(self.viewer_num))
+    #
+    #     viewer_info = "\t\t\t\t\t\t"+ "viewer.add( "+"panorama"+str(num+1)+");" + "\n"
+    #                   # "\t\t\t\t\t\t"+ "viewer.add( " + "panorama" + str(num+1) + ");"
+    #     viewer_list.append(str(viewer_info))
+
+
+    def panolink1_image_check(self):
         global file_name_item
-        self.panolink_file_label1.setText(file_name_item)
+        global file_path_item
+        relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
+        self.panolink_file_label1.setText(relpath)
 
-    def make_panolink2(self):
+    def panolink2_image_check(self):
+        global file_path_item
         global file_name_item
-        self.panolink_file_label2.setText(file_name_item)
+        relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
+        self.panolink_file_label2.setText(relpath)
 
 
     def infospot_add(self):
         global infospot_index
         global info_list
         global infospot_information
+        self.infospot_num += 1
         clicked_points = WebEnginePage.point
         info_list = self.info_list
+        num = self.listWidget.currentRow()
 
         html_info = "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + " = new PANOLENS.Infospot();""\n" + \
                     "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
                     "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addHoverText('"+ str(infospot_information)+"');" + "\n" + \
                     "\t\t\t\t\t\t" + "infospot" + str(self.infospot_num) + ".addEventListener( 'click', function(){this.focus();} );" + "\n" + \
-                    "\t\t\t\t\t\t" + "panorama1.add( infospot" + str(self.infospot_num) + " );"
+                    "\t\t\t\t\t\t" + "panorama"+str(num+1)+".add( infospot" + str(self.infospot_num) + " );"
 
 
         info_list.append(str(html_info))
-        self.infospot_num += 1
         self.infospot_num_label.setText(str(self.infospot_num))
 
     def vinfospot_add(self):
@@ -170,6 +217,8 @@ class WindowClass(QMainWindow, form_class) :
         vinfospot_url = self.second.second_text_vurl
         vinfospot_title = self.second.second_text_name
         vinfospot_information = self.second.second_text_vinfo
+        self.vinfospot_num += 1
+        num = self.listWidget.currentRow()
 
 
         html_desc =  "\n"+"\t\t\t\t\t" + "<div id="+'"desc-container'+str(self.vinfospot_num)+'"' + " style="+'"display:none"'+">"+"\n"+\
@@ -181,13 +230,13 @@ class WindowClass(QMainWindow, form_class) :
         html_vinfo = "\n"+"\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + " = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);""\n" + \
                      "\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + ".position.set( " + str(clicked_points[0][0]) + ", " + str(clicked_points[0][1]) + ", " + str(clicked_points[0][2]) + " );""\n" + \
                      "\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + ".addHoverElement(document.getElementById('" + "desc-container"+str(self.vinfospot_num) + "'), 200);" + "\n" + \
-                     "\t\t\t\t\t\t" + "panorama1.add( vinfospot" + str(self.vinfospot_num) + " );" + "\n"
+                     "\t\t\t\t\t\t" + "panorama"+str(num+1)+".add( vinfospot" + str(self.vinfospot_num) + " );" + "\n"
 
         #"\t\t\t\t\t\t" + "vinfospot" + str(self.vinfospot_num) + ".addEventListener( 'click', function(){this.focus();} );" + "\n" + \
         vinfo_list.append(str(html_vinfo))
         vinfo_desc_list.append(str(html_desc))
 
-        self.vinfospot_num += 1
+
         self.vinfospot_num_label.setText(str(self.vinfospot_num))
 
     def infospot_check(self):
@@ -200,6 +249,9 @@ class WindowClass(QMainWindow, form_class) :
         information_text = self.information_textEdit.toPlainText()
         self.information_label.setText(information_text)
         infospot_information = self.information_label.text()
+        self.point_x_label.setText(str(WebEnginePage.point[0][0]))
+        self.point_y_label.setText(str(WebEnginePage.point[0][1]))
+        self.point_z_label.setText(str(WebEnginePage.point[0][2]))
 
     def vinfospot_check(self):
         global vinfospot_url, vinfospot_title, vinfospot_information
@@ -207,20 +259,20 @@ class WindowClass(QMainWindow, form_class) :
         vinformation_text_title = self.vinformation_textEdit.toPlainText()
         self.vinformation_label.setText(vinformation_text_title)
         vinfospot_title = self.vinformation_label.text()
-
-
-
+        self.point_x_label.setText(str(WebEnginePage.point[0][0]))
+        self.point_y_label.setText(str(WebEnginePage.point[0][1]))
+        self.point_z_label.setText(str(WebEnginePage.point[0][2]))
 
     def get_html(self):
         self.infospot_num = 0
         self.vinfospot_num = 0
+        self.panolink_num = 0
         self.infospot_num_label.setText(str(self.infospot_num))
         self.vinfospot_num_label.setText(str(self.vinfospot_num))
         print("make html")
         global images_path
         global file_path_item
-        global info_list
-        global vinfo_list, vinfo_desc_list, relpath
+        global info_list, vinfo_list, vinfo_desc_list, relpath, image_list, panolink_forward_list, panolink_backward_list
 
 
         relpath = os.path.relpath(file_path_item, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
@@ -253,7 +305,7 @@ class WindowClass(QMainWindow, form_class) :
                         var panorama1;
                         var infospot1, infospot2, viewer;
         """
-        html_Number = "\t\t\t\t" + "var Num_index = 0;"
+        html_Number = "\t\t\t\t" + "var Num_index = 0;""\n"
 
 
         html_img = "\n"\
@@ -277,26 +329,19 @@ class WindowClass(QMainWindow, form_class) :
                             indicatorSize: 30,            // Size of View Indicator
                             output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
                           });
-
-                        panorama1.addEventListener("click", function(e){
-                            if (e.intersects.length > 0) return;
-                            const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
-                            console.log(JSON.stringify(a));
-                        });
                         
         """
-        html_viewer = """
-                        viewer.add( panorama1 );
+        html_ends = """
                     </script>
                 </body>
             </html>
         """
         html_file_path = html_path + '/' + 'html_file.html'
-        html_text = html_text1  + html_scripts + html_Number + html_img + html_text2 + html_viewer
+        html_text = html_text1  + html_scripts + html_Number + html_img + html_text2 + html_ends
 
         ######################
         if not os.path.exists(html_file_path):
-            with open('html_file.html', 'w', encoding="utf-8") as html_file:
+            with open( html_file_path, 'w', encoding="utf-8") as html_file:
                 html_file.write(html_text)
         else:
             print("already_exist")
@@ -305,9 +350,13 @@ class WindowClass(QMainWindow, form_class) :
             infospots = '\n'.join(info_list)
             video_infospots = '\n'.join(vinfo_list)
             video_desc = '\n'.join(vinfo_desc_list)
+            panoforwardlink = '\n'.join(panolink_forward_list)
+            panobackwardlink = '\n'.join(panolink_backward_list)
+            images = '\n'.join(image_list)
+            viewer = '\n'.join(viewer_list)
 
 
-            html_text = html_text1 + video_desc + html_scripts + html_Number + html_img + html_text2 + infospots +video_infospots + html_viewer
+            html_text = html_text1 + video_desc + html_scripts + html_Number + images + html_text2 + infospots +video_infospots + panoforwardlink + panobackwardlink + viewer + html_ends
 
 
             with open('html_file.html', 'w') as html_file:
@@ -375,16 +424,44 @@ class WindowClass(QMainWindow, form_class) :
 
     def File_Dialog(self):
         global images_path
+        global value, relpath, image_list, panolink_list, viewer_list, file_path_item
 
 
         images_path = QFileDialog.getExistingDirectory(self, 'Open File')
         self.images_path.append(images_path)
         file_list = os.listdir(images_path)
+        file_list.sort()
         print(images_path)
         file_list_py = [file for file in file_list if file.endswith(self.exts)]  ## 파일명 끝이 .jpg인 경우
+        image_list = self.image_list
+        viewer_list = self.viewer_list
+        num = 0
+        print(file_list_py)
+
+
         for file in sorted(file_list_py):
             self.listWidget.addItem(file)
+            image_add = images_path+"/"+file
+            relpath = os.path.relpath(image_add, "/Users/leehoseop/PycharmProjects/SVS_Data_Creator")
+            self.viewer_num += 1
+            num += 1
+
+            image_info = "\t\t\t\t\t\t" + "panorama" + str(num) + "= new PANOLENS.ImagePanorama(""'./" + relpath + "'"");" "\n" + \
+                         "\t\t\t\t\t\t" + "panorama" + str(num) + ".addEventListener("'"click"' + ", function(e) {" + "\n" + \
+                         "\t\t\t\t\t\t" + "   if (e.intersects.length > 0) return;" + "\n" + \
+                         "\t\t\t\t\t\t" + "   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;" + "\n" + \
+                         "\t\t\t\t\t\t" + "   console.log(JSON.stringify(a));" + "\n" + \
+                         "\t\t\t\t\t\t" + "});" + "\n"
+
+            image_list.append(str(image_info))
+            self.viewer_num_label.setText(str(self.viewer_num))
+
+            viewer_info = "\t\t\t\t\t\t" + "viewer.add( " + "panorama" + str(num) + ");" + "\n"
+            viewer_list.append(str(viewer_info))
+
             self.listWidget.setCurrentRow(0)    #default 값으로 인덱싱 넘버 0 번의 아이템을 클릭하도록 함
+            self.number += 1
+            ###
 
         print(self.image_list)
         #전체 아이템 개수

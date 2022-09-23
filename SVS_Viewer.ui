@@ -39,9 +39,9 @@
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>1340</x>
-      <y>243</y>
-      <width>241</width>
+      <x>1360</x>
+      <y>240</y>
+      <width>221</width>
       <height>251</height>
      </rect>
     </property>
@@ -275,7 +275,7 @@
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>349</x>
+      <x>334</x>
       <y>773</y>
       <width>51</width>
       <height>16</height>
@@ -288,9 +288,9 @@
    <widget class="QLabel" name="point_x_label">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>395</x>
       <y>771</y>
-      <width>141</width>
+      <width>170</width>
       <height>18</height>
      </rect>
     </property>
@@ -298,7 +298,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="text">
-     <string> Undifined</string>
+     <string>0</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -307,7 +307,7 @@
    <widget class="QLabel" name="label_9">
     <property name="geometry">
      <rect>
-      <x>349</x>
+      <x>334</x>
       <y>811</y>
       <width>51</width>
       <height>16</height>
@@ -320,9 +320,9 @@
    <widget class="QLabel" name="point_y_label">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>395</x>
       <y>809</y>
-      <width>141</width>
+      <width>170</width>
       <height>20</height>
      </rect>
     </property>
@@ -330,7 +330,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="text">
-     <string> Undifined</string>
+     <string>0</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -377,7 +377,7 @@
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>395</x>
       <y>734</y>
       <width>111</width>
       <height>21</height>
@@ -409,8 +409,8 @@
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>1241</x>
-      <y>652</y>
+      <x>1240</x>
+      <y>590</y>
       <width>350</width>
       <height>16</height>
      </rect>
@@ -459,7 +459,7 @@
    <widget class="QLabel" name="label_12">
     <property name="geometry">
      <rect>
-      <x>349</x>
+      <x>334</x>
       <y>849</y>
       <width>51</width>
       <height>16</height>
@@ -472,9 +472,9 @@
    <widget class="QLabel" name="point_z_label">
     <property name="geometry">
      <rect>
-      <x>410</x>
+      <x>395</x>
       <y>847</y>
-      <width>141</width>
+      <width>170</width>
       <height>20</height>
      </rect>
     </property>
@@ -482,7 +482,7 @@
      <enum>QFrame::Box</enum>
     </property>
     <property name="text">
-     <string> Undifined</string>
+     <string> 0</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -491,9 +491,9 @@
    <widget class="QWidget" name="verticalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>244</y>
-      <width>98</width>
+      <x>1230</x>
+      <y>240</y>
+      <width>121</width>
       <height>251</height>
      </rect>
     </property>
@@ -502,6 +502,13 @@
       <widget class="QPushButton" name="btn_loadFromFile">
        <property name="text">
         <string>Directory</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="viewer_add_btn">
+       <property name="text">
+        <string>make_view</string>
        </property>
       </widget>
      </item>
@@ -539,7 +546,7 @@
     <property name="geometry">
      <rect>
       <x>1239</x>
-      <y>801</y>
+      <y>769</y>
       <width>350</width>
       <height>10</height>
      </rect>
@@ -557,28 +564,21 @@
       <x>1240</x>
       <y>539</y>
       <width>341</width>
-      <height>101</height>
+      <height>41</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="1">
+     <item row="0" column="1">
       <widget class="QPushButton" name="save_btn">
        <property name="text">
         <string>SAVE</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="0" column="0">
       <widget class="QPushButton" name="btn_adjust">
        <property name="text">
         <string>Adjust</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" colspan="2">
-      <widget class="QPushButton" name="btn_Image_Data_Generator">
-       <property name="text">
-        <string>Image Data Generator</string>
        </property>
       </widget>
      </item>
@@ -588,9 +588,9 @@
     <property name="geometry">
      <rect>
       <x>1240</x>
-      <y>832</y>
+      <y>785</y>
       <width>351</width>
-      <height>71</height>
+      <height>61</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -640,7 +640,7 @@
     <property name="geometry">
      <rect>
       <x>1240</x>
-      <y>726</y>
+      <y>653</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -657,7 +657,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1240</x>
-      <y>766</y>
+      <y>693</y>
       <width>171</width>
       <height>21</height>
      </rect>
@@ -676,7 +676,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1270</x>
-      <y>686</y>
+      <y>613</y>
       <width>116</width>
       <height>32</height>
      </rect>
@@ -689,7 +689,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1450</x>
-      <y>686</y>
+      <y>613</y>
       <width>116</width>
       <height>32</height>
      </rect>
@@ -702,7 +702,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1420</x>
-      <y>726</y>
+      <y>653</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -719,7 +719,7 @@ p, li { white-space: pre-wrap; }
     <property name="geometry">
      <rect>
       <x>1420</x>
-      <y>766</y>
+      <y>693</y>
       <width>171</width>
       <height>21</height>
      </rect>
@@ -756,24 +756,24 @@ p, li { white-space: pre-wrap; }
    <widget class="QWidget" name="gridLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>734</y>
-      <width>201</width>
-      <height>81</height>
+      <x>710</x>
+      <y>750</y>
+      <width>366</width>
+      <height>46</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="0">
-      <widget class="QPushButton" name="panolink_check2_btn">
+     <item row="0" column="0" rowspan="2">
+      <widget class="QPushButton" name="panolink_check1_btn">
        <property name="text">
-        <string>panolink2 check</string>
+        <string> panolink image1 check</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="panolink_check1_btn">
+     <item row="0" column="1" rowspan="2">
+      <widget class="QPushButton" name="panolink_check2_btn">
        <property name="text">
-        <string> panolink1 check</string>
+        <string>panolink image2 check</string>
        </property>
       </widget>
      </item>
@@ -782,10 +782,10 @@ p, li { white-space: pre-wrap; }
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>790</x>
-      <y>734</y>
-      <width>421</width>
-      <height>80</height>
+      <x>580</x>
+      <y>810</y>
+      <width>631</width>
+      <height>61</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -819,6 +819,64 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_4">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>860</y>
+      <width>351</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="1" rowspan="2">
+      <widget class="QPushButton" name="panolink_add2_btn">
+       <property name="text">
+        <string>panolink_backward</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" rowspan="2">
+      <widget class="QPushButton" name="panolink_add1_btn">
+       <property name="text">
+        <string> panolink_forward</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="btn_Image_Data_Generator">
+    <property name="geometry">
+     <rect>
+      <x>1240</x>
+      <y>727</y>
+      <width>341</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Image Data Generator</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="viewer_num_label">
+    <property name="geometry">
+     <rect>
+      <x>1460</x>
+      <y>500</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Box</enum>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
