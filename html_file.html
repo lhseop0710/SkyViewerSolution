@@ -127,24 +127,34 @@
                         
         
 						infospot1 = new PANOLENS.Infospot();
-						infospot1.position.set( 5000.000000000001, -445.46878695161433, 2902.277980214699 );
+						infospot1.position.set( 5000, -1421.6108315288993, -2704.0539564797523 );
 						infospot1.addHoverText('infospot');
 						infospot1.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot1 );
 						infospot2 = new PANOLENS.Infospot();
-						infospot2.position.set( 5000, -2268.65777435643, 3225.8815903731943 );
+						infospot2.position.set( 2245.351823170577, -1057.083680822723, 5000 );
 						infospot2.addHoverText('infospot');
 						infospot2.addEventListener( 'click', function(){this.focus();} );
 						panorama1.add( infospot2 );
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( 5000, -359.336041930712, -2016.7038208251836 );
+						infospot1.addHoverText('infospot1');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
+						panorama2.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( -1189.7540215603017, -1193.9028673551582, 5000 );
+						infospot2.addHoverText('infospot2');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama2.add( infospot2 );
 
 						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
-						vinfospot1.position.set( 445.15208515073084, -1701.5381075259202, -5000 );
+						vinfospot1.position.set( 5000, -46.67445163733603, -809.1275813906683 );
 						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
 						panorama1.add( vinfospot1 );
 
-						panorama1.link(panorama2, new THREE.Vector3(5000, -255.97809284345698, 193.4258564288043 ), 400 );
+						panorama1.link(panorama2, new THREE.Vector3(4999.999999999999, -435.4456994171205, 398.6364236514654 ), 400 );
 
-						panorama1.link(panorama0, new THREE.Vector3(-5000, 267.86156247743395, -233.5946293306177 ), 400 );
+						panorama2.link(panorama1, new THREE.Vector3(928.3274870933394, 4999.999999999999, -910.8036786281705 ), 400 );
 
 						viewer.add( panorama1);
 
