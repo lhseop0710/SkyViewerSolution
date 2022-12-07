@@ -1,101 +1,406 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
-    <title>Panolens.js panorama image panorama</title>
-    <link href="css/stayle.css" rel="stylesheet" type="text/css">
-  </head>
-<!-- desc-container 부분은 사이즈 정책 디자인임 -->
-  <body>
 
-    <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+                    <title>Panolens.js panorama image panorama</title>
+                    <link href="./css/stayle.css" rel="stylesheet" type="text/css">
+                </head>
+                <body>
+                    <div class="credit"><a href="https://github.com/pchen66/panolens.js">Panolens.js</a> SkyViewerSolution.Corporation. Image from <a href="https://github.com/lhseop0710">Hoseop Lee</a></div>
+        
 
-    <div id="desc-container" style="display:none">
-      <iframe src="https://www.youtube.com/embed/_gep8hwWSNM"></iframe>
-      <div class="title">만년호사원의 매빅에어2 항공촬영</div>
-      <div class="text">테스트 "이 영상을 찍고 매빅에어2는 장렬히 전사하였다."...</div>
-    </div>
-    <!-- //유투브 영상을 위처럼 선언해두고 바디부분에서 끌어당겨 쓰는 형식 -->
-
-    <script src="three.min.js"></script>
-    <script src="panolens.min.js"></script>
-
-    <script>
-      var panorama1, panorama2, panorama3, panorama4, viewer
-      var infospot1, infospot2, infospot3
-
-      panorama1 = new PANOLENS.ImagePanorama( './panorama_images/saejong_lake/a.jpeg' );
-
-      //const panoImage = './panorama_images/sky_view_test.jpg';
-      //const panorama = new PANOLENS.ImagePanorama( panoImage );
-      //const viewer = new PANOLENS.Viewer( { output: 'console' } );
-
-      //var Infospot = new PANOLENS.Infospot();
-      //Infospot.position.set(5000.00, 200, 600);
-      //Infospot.addHoverText('청주대학교 도서관')
-
-      //Infospot.addEventListener('click',function(){
-      //      window.location.href='https://naver.com';
-      //});
+					<div id="desc-container1" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/M4fx5O6vTbY"></iframe>
+					 <div class="title">"세종 호수공원 입니다."</div>
+					 <div class="text">"이곳에 다양한 유투브 영상을 연동시킬 수 있습니다."</div>
+					</div>
 
 
-      //panorama.add( Infospot ) ;
-
-      viewer = new PANOLENS.Viewer({
-        container: document.body,        // A DOM Element container
-        controlBar: true,             // Vsibility of bottom control bar
-        controlButtons: [],            // Buttons array in the control bar. Default to ['fullscreen', 'setting', 'video']
-        autoHideControlBar: false,        // Auto hide control bar
-        autoHideInfospot: false,            // Auto hide infospots
-        horizontalView: false,            // Allow only horizontal camera control
-        cameraFov: 60,                // Camera field of view in degree
-        reverseDragging: false,            // Reverse orbit control direction
-        enableReticle: false,            // Enable reticle for mouseless interaction
-        dwellTime: 1500,            // Dwell time for reticle selection in millisecond
-        autoReticleSelect: true,        // Auto select a clickable target after dwellTime
-        viewIndicator: false,            // Adds an angle view indicator in upper left corner
-        indicatorSize: 30,            // Size of View Indicator
-        output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
-      });
+					<div id="desc-container1" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/XrSVateOl5o"></iframe>
+					 <div class="title">"수상무대섬"</div>
+					 <div class="text">"수상무대섬 유투브"</div>
+					</div>
 
 
-      //infospot1 = new PANOLENS.Infospot();
-      //infospot1.position.set(5000.00, 200, 600);
-      //infospot1.addHoverText('청주대학교 도서관\nClick 링크이동')
-
-      //infospot2 = new PANOLENS.Infospot( 300, PANOLENS.DataImage.Info );
-      //infospot2.position.set( -5000.00, -1825.25, 197.56 );
-      //infospot2.addHoverElement( document.getElementById( 'desc-container' ), 200 );
-
-      //infospot1.addEventListener('click',function(){
-      //  this.focus();
-      //  window.open('https://library.cju.ac.kr/',"파노라마 새창",location);
-      //  //window.location.href='https://library.cju.ac.kr/';
-      //  let element = document.createElement( 'div' );
-      //  element.style.backgroundColor = '#fff';
-      //  element.style.maxWidth = '200px';
-      //  element.style.maxHeight = '200px';
-      //  element.style.fontFamily = '"Trebuchet MS", Helvetica, sans-serif';
-      //  element.style.position = 'absolute';
-      //  document.body.appendChild(element);
-      //});
-
-      panorama1.addEventListener("click", function(e){
-        if (e.intersects.length > 0) return;
-        const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
-        console.log(JSON.stringify(a));
-      });
-
-      //panorama1.add(infospot1);
-      viewer.add( panorama1 );
+					<div id="desc-container1" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/XrSVateOl5o"></iframe>
+					 <div class="title">"수상무대섬"</div>
+					 <div class="text">"수상무대섬 유투브"</div>
+					</div>
 
 
-    //Linking between panorama images
-      panorama1.link(panorama2, new THREE.Vector3(5000, -1500, 400), 700);
+					<div id="desc-container1" style="display:none">
+					 <iframe src ="https://www.youtube.com/embed/XrSVateOl5o"></iframe>
+					 <div class="title">"수상무대섬"</div>
+					 <div class="text">"수상무대섬 유투브"</div>
+					</div>
 
 
+					<div id="desc-container2" style="display:none">
+					 <iframe src ="https://youtu.be/embed/XrSVateOl5o"></iframe>
+					 <div class="title">"세종호수공원"</divㄴ
+					 <div class="text">"국토교통부의 유투브 영상입니다."</div>
+					</div>
 
-    </script>
-  </body>
-</html>
+                    <script src="./js/three/three.min.js"></script>
+                    <script src="./js/panolens/panolens.min.js"></script>
+                    <script>
+                        var panorama1;
+                        var infospot1, infospot2, viewer;
+        				var Num_index = 0;
+
+						panorama1= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/a.jpeg');
+						panorama1.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama2= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/b.jpeg');
+						panorama2.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama3= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/c.jpeg');
+						panorama3.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama4= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/d.jpeg');
+						panorama4.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama5= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/e.jpeg');
+						panorama5.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama6= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/f.jpeg');
+						panorama6.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama7= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/g.jpeg');
+						panorama7.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama8= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/h.jpeg');
+						panorama8.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama9= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/i.jpeg');
+						panorama9.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama10= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/j.jpeg');
+						panorama10.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama11= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/k.jpeg');
+						panorama11.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+						panorama12= new PANOLENS.ImagePanorama('./panorama_images/saejong_lake/l.jpeg');
+						panorama12.addEventListener("click", function(e) {
+						   if (e.intersects.length > 0) return;
+						   const a = viewer.raycaster.intersectObject(viewer.panorama, true)[0].point;
+						   console.log(JSON.stringify(a));
+						});
+
+                        viewer = new PANOLENS.Viewer({
+                            container: document.body,        // A DOM Element container
+                            controlBar: true,             // Vsibility of bottom control bar
+                            controlButtons: [],            // Buttons array in the control bar. Default to ['fullscreen', 'setting', 'video']
+                            autoHideControlBar: false,        // Auto hide control bar
+                            autoHideInfospot: false,            // Auto hide infospots
+                            horizontalView: false,            // Allow only horizontal camera control
+                            cameraFov: 60,                // Camera field of view in degree
+                            reverseDragging: false,            // Reverse orbit control direction
+                            enableReticle: false,            // Enable reticle for mouseless interaction
+                            dwellTime: 1500,            // Dwell time for reticle selection in millisecond
+                            autoReticleSelect: true,        // Auto select a clickable target after dwellTime
+                            viewIndicator: false,            // Adds an angle view indicator in upper left corner
+                            indicatorSize: 30,            // Size of View Indicator
+                            output: 'console'            // Whether and where to output infospot position. Could be 'console' or 'overlay'
+                          });
+                        
+        
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( 5000, -58.99526810470682, -856.4847792808235 );
+						infospot1.addHoverText('세종 호수공원');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( 3350.190137852246, 1007.4203212497805, -5000 );
+						infospot2.addHoverText('호수의 아침 오피스텔');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot2 );
+						infospot3 = new PANOLENS.Infospot();
+						infospot3.position.set( -478.41866177407906, -979.7349306040225, 5000.000000000001 );
+						infospot3.addHoverText('공영 주차장');
+						infospot3.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot3 );
+						infospot4 = new PANOLENS.Infospot();
+						infospot4.position.set( 722.2151813789827, -17.992631646801218, 5000.000000000001 );
+						infospot4.addHoverText('세종 예술 고등학교');
+						infospot4.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot4 );
+						infospot5 = new PANOLENS.Infospot();
+						infospot5.position.set( -5000, 87.58389044208195, 399.4452868609936 );
+						infospot5.addHoverText('나성 초등학교');
+						infospot5.addEventListener( 'click', function(){this.focus();} );
+						panorama1.add( infospot5 );
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( -1362.230251292588, -1003.2001784445405, 5000.000000000001 );
+						infospot1.addHoverText('공공 화장실 깨끗하게 이용합시다');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
+						panorama2.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( -5000.000000000001, -476.98900289793113, 2989.4540198105947 );
+						infospot2.addHoverText('공영 주차장 주차선이라는 것은 그 안에 차를 맞추게 하기 위함임을 왜 모르나!!');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama2.add( infospot2 );
+						infospot3 = new PANOLENS.Infospot();
+						infospot3.position.set( -1861.2404701367193, -50.21928825057915, 5000 );
+						infospot3.addHoverText('세종 예술 고등학교');
+						infospot3.addEventListener( 'click', function(){this.focus();} );
+						panorama2.add( infospot3 );
+						infospot4 = new PANOLENS.Infospot();
+						infospot4.position.set( 5000, -1333.171807090862, 2091.8798821467226 );
+						infospot4.addHoverText('수변마루');
+						infospot4.addEventListener( 'click', function(){this.focus();} );
+						panorama2.add( infospot4 );
+						infospot5 = new PANOLENS.Infospot();
+						infospot5.position.set( 5000, -260.2977995320166, -4389.291066007628 );
+						infospot5.addHoverText('수변전통공원');
+						infospot5.addEventListener( 'click', function(){this.focus();} );
+						panorama2.add( infospot5 );
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( 387.0599575309443, -653.2515620272828, -5000 );
+						infospot1.addHoverText('subyeon jeontong park');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
+						panorama3.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( -5000, -1300.8811167521128, 1211.5002237062204 );
+						infospot2.addHoverText('수변마루');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama3.add( infospot2 );
+						infospot3 = new PANOLENS.Infospot();
+						infospot3.position.set( 5000, -879.4416738267714, 3097.464776225335 );
+						infospot3.addHoverText('야생초 화원');
+						infospot3.addEventListener( 'click', function(){this.focus();} );
+						panorama3.add( infospot3 );
+						infospot4 = new PANOLENS.Infospot();
+						infospot4.position.set( 5000, -535.2342830036757, 1685.247882636847 );
+						infospot4.addHoverText('water play');
+						infospot4.addEventListener( 'click', function(){this.focus();} );
+						panorama3.add( infospot4 );
+						infospot5 = new PANOLENS.Infospot();
+						infospot5.position.set( 5000, -862.2218483761806, -3241.4190442883173 );
+						infospot5.addHoverText('전통 놀이 마당');
+						infospot5.addEventListener( 'click', function(){this.focus();} );
+						panorama3.add( infospot5 );
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( 773.2799855933632, -1845.2402636425463, 5000.000000000001 );
+						infospot1.addHoverText('야생초 화원');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( -4375.654133728939, -546.4896461784548, -4999.999999999999 );
+						infospot2.addHoverText('전통 놀이 마당');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot2 );
+						infospot3 = new PANOLENS.Infospot();
+						infospot3.position.set( -5000, 14.359795596717404, -938.1661605033578 );
+						infospot3.addHoverText('수변 전통 공원');
+						infospot3.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot3 );
+						infospot4 = new PANOLENS.Infospot();
+						infospot4.position.set( 4999.999999999999, -1707.6228838737027, -519.2321007810931 );
+						infospot4.addHoverText('물놀이 공원');
+						infospot4.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot4 );
+						infospot5 = new PANOLENS.Infospot();
+						infospot5.position.set( 4674.237712597184, -360.0453469022429, -4999.999999999999 );
+						infospot5.addHoverText('수상무대섬');
+						infospot5.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot5 );
+						infospot6 = new PANOLENS.Infospot();
+						infospot6.position.set( -480.06474760525776, 38.616452216896434, -5000 );
+						infospot6.addHoverText('국립 세종 도서관');
+						infospot6.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot6 );
+						infospot7 = new PANOLENS.Infospot();
+						infospot7.position.set( 1373.9710582142022, 64.02215091679929, -5000 );
+						infospot7.addHoverText('정부 세종 컨벤션센터');
+						infospot7.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot7 );
+						infospot8 = new PANOLENS.Infospot();
+						infospot8.position.set( 5000, -575.1894476127724, 360.8015249532686 );
+						infospot8.addHoverText('푸른 들판');
+						infospot8.addEventListener( 'click', function(){this.focus();} );
+						panorama4.add( infospot8 );
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( -5000, -507.7861981789586, 3482.8354872335 );
+						infospot1.addHoverText('공공 화장실');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( -4856.203407334811, -775.6187896092376, 5000 );
+						infospot2.addHoverText('자전거 대여소');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot2 );
+						infospot3 = new PANOLENS.Infospot();
+						infospot3.position.set( 5000, -1118.0857396163365, 4992.267192739914 );
+						infospot3.addHoverText('카페 전시관');
+						infospot3.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot3 );
+						infospot4 = new PANOLENS.Infospot();
+						infospot4.position.set( 3875.3626529024455, -5000, 3535.5751019371537 );
+						infospot4.addHoverText('은빛 해변');
+						infospot4.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot4 );
+						infospot5 = new PANOLENS.Infospot();
+						infospot5.position.set( 5000.000000000001, -737.0391279744476, 3837.626121387409 );
+						infospot5.addHoverText('호수 호풍 숲');
+						infospot5.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot5 );
+						infospot6 = new PANOLENS.Infospot();
+						infospot6.position.set( -2526.608317242456, 51.90192822591322, -4999.999999999999 );
+						infospot6.addHoverText('국립 세종 도서관');
+						infospot6.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot6 );
+						infospot7 = new PANOLENS.Infospot();
+						infospot7.position.set( -1370.379932935171, -294.15817517220336, -4999.999999999999 );
+						infospot7.addHoverText('중앙 광장');
+						infospot7.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot7 );
+						infospot8 = new PANOLENS.Infospot();
+						infospot8.position.set( 1282.1351646850005, -370.69735714317574, -5000 );
+						infospot8.addHoverText('축제 섬');
+						infospot8.addEventListener( 'click', function(){this.focus();} );
+						panorama5.add( infospot8 );
+						infospot1 = new PANOLENS.Infospot();
+						infospot1.position.set( -2795.1431851489506, -495.58405644583956, 5000 );
+						infospot1.addHoverText('축제 섬');
+						infospot1.addEventListener( 'click', function(){this.focus();} );
+						panorama6.add( infospot1 );
+						infospot2 = new PANOLENS.Infospot();
+						infospot2.position.set( 1494.243188783718, -491.14538560629404, 5000 );
+						infospot2.addHoverText('중앙 광장');
+						infospot2.addEventListener( 'click', function(){this.focus();} );
+						panorama6.add( infospot2 );
+						infospot3 = new PANOLENS.Infospot();
+						infospot3.position.set( 2614.3961545238703, -351.18371610332036, 5000.000000000001 );
+						infospot3.addHoverText('매화 공연장');
+						infospot3.addEventListener( 'click', function(){this.focus();} );
+						panorama6.add( infospot3 );
+
+						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot1.position.set( 5000, 684.6639270969531, -1740.6144748370155 );
+						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
+						panorama2.add( vinfospot1 );
+
+
+						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot1.position.set( 5000, 85.72958082406869, -109.71254771125832 );
+						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
+						panorama3.add( vinfospot1 );
+
+
+						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot1.position.set( -3914.981987849224, -423.8180027158643, -5000 );
+						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
+						panorama5.add( vinfospot1 );
+
+
+						vinfospot1 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot1.position.set( 5000.000000000001, -1794.5217924583014, 133.8746094064827 );
+						vinfospot1.addHoverElement(document.getElementById('desc-container1'), 200);
+						panorama5.add( vinfospot1 );
+
+
+						vinfospot2 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+						vinfospot2.position.set( 5000, -1801.0072595364973, 114.90915761311093 );
+						vinfospot2.addHoverElement(document.getElementById('desc-container2'), 200);
+						panorama6.add( vinfospot2 );
+
+						panorama1.link(panorama2, new THREE.Vector3(4999.999999999999, -457.9373609431775, 172.46735363372736 ), 400 );
+
+						panorama2.link(panorama3, new THREE.Vector3(5000, -297.46379214029696, -304.35903074017597 ), 400 );
+
+						panorama3.link(panorama4, new THREE.Vector3(5000, -861.0918430073517, 916.9523478283835 ), 400 );
+
+						panorama4.link(panorama5, new THREE.Vector3(5000, -320.0740436112733, -1646.0105559764334 ), 400 );
+
+						panorama5.link(panorama6, new THREE.Vector3(-776.546467016728, -733.0955926899139, -5000.000000000001 ), 400 );
+
+						panorama6.link(panorama7, new THREE.Vector3(1555.772333862953, -457.1066559258807, 5000 ), 400 );
+
+						panorama2.link(panorama1, new THREE.Vector3(-5000, 361.3976597577256, -197.74297108029992 ), 400 );
+
+						panorama3.link(panorama2, new THREE.Vector3(-5000, -459.60247207271726, -2531.035354442469 ), 400 );
+
+						panorama4.link(panorama3, new THREE.Vector3(-5000, -363.54429080293346, 1140.498769666248 ), 400 );
+
+						panorama5.link(panorama4, new THREE.Vector3(-4999.999999999999, -329.1571601495738, -735.1127220406172 ), 400 );
+
+						panorama6.link(panorama5, new THREE.Vector3(631.4867381357361, -841.2673266117298, -5000 ), 400 );
+
+						viewer.add( panorama1);
+
+						viewer.add( panorama2);
+
+						viewer.add( panorama3);
+
+						viewer.add( panorama4);
+
+						viewer.add( panorama5);
+
+						viewer.add( panorama6);
+
+						viewer.add( panorama7);
+
+						viewer.add( panorama8);
+
+						viewer.add( panorama9);
+
+						viewer.add( panorama10);
+
+						viewer.add( panorama11);
+
+						viewer.add( panorama12);
+
+                    </script>
+                </body>
+            </html>
+        
