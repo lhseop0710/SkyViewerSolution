@@ -24,5 +24,8 @@ dlait.co.kr 는 현재 시범운영중으로 https://를 아직 적용하지 않
 <img width="1792" alt="image" src="https://user-images.githubusercontent.com/79184520/206310973-a2c16bbd-0d6d-4cf1-a9be-6492b12a87ab.png">
 dlait.co.kr 는 현재 시범운영중으로 https://를 아직 적용하지 않았습니다.
 
-레이츠로 바로 가기
+
+
+레이츠로 바로 가기QR코드
+
 ![qrcode_dlaits co kr](https://user-images.githubusercontent.com/79184520/206326187-b7ed3cb5-c248-47be-ab69-d423f7e3e704.png)
